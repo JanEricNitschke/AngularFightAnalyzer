@@ -1,0 +1,25 @@
+label {
+    color: #FF9900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin: 5px;
+}
+
+input {
+    color: #232F3E;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.time_label {
+    width: 120px;
+    display: inline-block;
+    margin-right: 0px;
+}
+
+.time_input {
+    width: 60px;
+    margin: 0px;
+    padding: 0px;
+}

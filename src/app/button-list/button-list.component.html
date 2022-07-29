@@ -1,0 +1,12 @@
+<div class="dropdown">
+    <button class="dropbtn">{{Name}}</button>
+    <div class="dropdown-content">
+        <button class="addBtn" *ngFor="let add_content of ContentNotSelected"
+            (click)="addElement(add_content)">{{add_content}}</button>
+    </div>
+</div>
+<ul>
+    <li *ngFor="let remove_content of ContentSelected">
+        <button class="dynamic_button" (click)="removeElement(remove_content)">{{remove_content}}</button>
+    </li>
+</ul>

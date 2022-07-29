@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angular-fight-analyzer';
+  title = 'CS:GO FightAnalyzer';
 }

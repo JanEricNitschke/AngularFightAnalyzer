@@ -1,0 +1,16 @@
+<div class="radio_div">
+    <label innerHTML={{Name}}></label>
+    <app-information-display [Type]="Name"></app-information-display>
+    <div *ngFor="let choice of Choices">
+        <input type="radio" id='{{Name}}_{{choice}}' name='{{Name}}_weapons_classes' [value]="choice" [(ngModel)]="Type"
+            (ngModelChange)="submitType()" />
+        <label for='{{Name}}_{{choice}}' [innerHTML]="choice"></label>
+    </div>
+</div>
+<div class="flexbox">
+    <app-button-list [Name]='only_allowed ? "Allowed" : Type' [ContentType]="Type"
+        (contentEvent)="updateAllowed($event)"></app-button-list>
+    <app-button-list *ngIf="!only_allowed" Name="Forbidden" [ContentType]="Type"
+        (contentEvent)="updateForbidden($event)">
+    </app-button-list>
+</div>

@@ -1,0 +1,7 @@
+<h2>Results</h2>
+<div id="result_content" class="result_text">
+    <p id="result_text" [innerHTML]="resultInnerHTML"></p>
+    <div id="loading" [style]="loadingDisplay"></div>
+    <p id="timer" [style]="timerDisplay">{{timerInnerHTML}}</p>
+</div>
+<button type="button" (click)="GoToSelector()">Back to selector</button>

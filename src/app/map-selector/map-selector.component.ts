@@ -1,0 +1,35 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-map-selector',
+  templateUrl: './map-selector.component.html',
+  styleUrls: ['./map-selector.component.css']
+})
+export class MapSelectorComponent implements OnInit {
+  maps = ["de_ancient", "de_cache", "de_cbble", "de_dust2", "de_inferno", "de_mirage", "de_nuke", "de_overpass", "de_train", "de_vertigo"]
+  selectedMap = "de_dust2"
+  CTPositions: string[] = [];
+  TPositions: string[] = [];
+  @Output() ctEvent = new EventEmitter<string[]>();
+  @Output() tEvent = new EventEmitter<string[]>();
+  @Output() mapEvent = new EventEmitter<string>();
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  updateCTPositions(ct_positions: string[]) {
+    this.CTPositions = ct_positions;
+    this.ctEvent.emit(this.CTPositions);
+  }
+
+  updateTPositions(t_positions: string[]) {
+    this.TPositions = t_positions;
+    this.tEvent.emit(this.TPositions);
+  }
+
+  submitMap() {
+    this.mapEvent.emit(this.selectedMap)
+  }
+
+}

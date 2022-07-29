@@ -1,0 +1,17 @@
+<h2>Fight selector</h2>
+<h3>Choose the specifics of which fight you want to analyze</h3>
+<div class="flexbox_outside">
+    <app-map-selector (ctEvent)="updateCTPositions($event)" (tEvent)="updateTPositions($event)"
+        (mapEvent)="updateMap($event)"></app-map-selector>
+    <div class="flexbox_inside">
+        <app-weapon-selector Name="Kill" [only_allowed]=true (AllowedEvent)="updateKillAllowed($event)"
+            (TypeEvent)="updateKillType($event)"></app-weapon-selector>
+        <app-weapon-selector Name="CT" (AllowedEvent)="updateCTAllowed($event)"
+            (ForbiddenEvent)="updateCTForbidden($event)" (TypeEvent)="updateCTType($event)"></app-weapon-selector>
+        <app-weapon-selector Name="T" (AllowedEvent)="updateTAllowed($event)"
+            (ForbiddenEvent)="updateTForbidden($event)" (TypeEvent)="updateTType($event)"></app-weapon-selector>
+        <app-time-selector (startEvent)="updateStartTime($event)" (endEvent)="updateEndTime($event)">
+        </app-time-selector>
+    </div>
+</div>
+<button type="button" (click)="CollectQuery()">Query</button>

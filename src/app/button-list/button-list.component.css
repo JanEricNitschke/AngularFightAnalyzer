@@ -1,0 +1,100 @@
+button {
+    color: #FF9900;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.dynamic_button {
+    font-size: 20px;
+    margin: 0px;
+    /* padding: 0px; */
+    text-align: center;
+}
+
+.dynamic_button:hover {
+    background-color: #8d150c;
+}
+
+ul {
+    list-style-type: none;
+    display: inline;
+    font-size: 20px;
+    padding: 0px;
+    overflow: hidden;
+    background-color: #232F3E;
+    margin: 0px;
+}
+
+li {
+    margin: 0px;
+    display: inline-block;
+}
+
+.dropbtn {
+    background-color: hsla(122, 0%, 46%, 100);
+    cursor: pointer;
+    vertical-align: top;
+    width: 150px;
+    margin: 0px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline;
+    margin-left: 5px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 10px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    max-width: 150px;
+    margin: 0px;
+    padding: 0px;
+    z-index: 1;
+    left: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+
+.addBtn {
+    margin: 0px;
+    padding: 0px;
+    width: 150px;
+    background-color: aquamarine;
+    display: inline
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media only screen and (orientation: portrait) {
+    .dropdown {
+        display: inline;
+    }
+
+    ul {
+        display: inline;
+    }
+
+    li {
+        display: inline-block;
+    }
+
+    .dynamic_button {
+        width: auto;
+    }
+}

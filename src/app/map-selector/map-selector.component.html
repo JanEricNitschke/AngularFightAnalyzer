@@ -1,0 +1,14 @@
+<div class="flexbox">
+    <div>
+        <label for="map_select">Map:</label>
+        <select id="map_select" [(ngModel)]="selectedMap" (ngModelChange)="submitMap()">
+            <option *ngFor="let map of maps" [value]=map>{{map}}</option>
+        </select>
+        <app-information-display Type="Maps"></app-information-display>
+    </div>
+    <img src='../../assets/map_hulls/hulls_{{selectedMap}}.png' class="map_hull">
+    <app-button-list Name="CT_Positions" [ContentType]=selectedMap Alignment="Horizontal"
+        (contentEvent)="updateCTPositions($event)"></app-button-list>
+    <app-button-list Name="T_Positions" [ContentType]=selectedMap Alignment="Horizontal"
+        (contentEvent)="updateTPositions($event)"></app-button-list>
+</div>
