@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from "rxjs/operators";
-import { Result } from "../result"
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { SelectionService } from '../selection.service';
 
 @Component({
