@@ -3,7 +3,6 @@ import { Router, NavigationExtras } from '@angular/router';
 import { SelectionService } from '../selection.service';
 import { Result } from "../result"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ParseTreeResult } from '@angular/compiler';
 
 @Component({
   selector: 'app-result-display',
@@ -13,7 +12,7 @@ import { ParseTreeResult } from '@angular/compiler';
 export class ResultDisplayComponent implements OnInit {
   ResponseBody: Result = {
     Situations_found: 0,
-    CT_win_percentage: 0,
+    CT_win_percentage: [0, 0, 0],
     sql: ''
   };
   httpOptions = {
@@ -22,7 +21,6 @@ export class ResultDisplayComponent implements OnInit {
   loadingDisplay: string = 'display: none'
   timerDisplay: string = 'display: none'
   timerInnerHTML: string = ''
-  resultInnerHTML: string = "The result will be shown here.<br>Press the 'Query' button to get the CT winpercentage for your chosen configuration.";
   ResponseStatusCode: number = 0;
   constructor(private http: HttpClient, private router: Router, private selectionService: SelectionService) { }
 
@@ -37,34 +35,11 @@ export class ResultDisplayComponent implements OnInit {
         this.ResponseBody = JSON.parse(data.body);
         this.ResponseStatusCode = data.statusCode;
         this.hideLoading()
-        this.ParseResult()
       })
     });
   }
 
 
-  ParseResult() {
-    try {
-      const body = this.ResponseBody
-      const status_code = this.ResponseStatusCode
-      if (status_code == 200) {
-        this.resultInnerHTML = "A total of " + body.Situations_found + " situations matching your description  \
-            have been found.<br>Out of those the CT's won " + body.CT_win_percentage + "%."
-      }
-      else if (status_code == 500) {
-        this.resultInnerHTML = "An error occured while processing your request: " + body.errorMessage
-      }
-      else if (status_code == 408) {
-        this.resultInnerHTML = "The request timed out with the error message: " + body.errorMessage + "!<br>Your selection is probably too broad. Try a narrower one!"
-      }
-      else {
-        this.resultInnerHTML = "An unkown status_code of " + status_code + " was returned from your query. I do not know what happend here..."
-      }
-    }
-    catch {
-      this.resultInnerHTML = "Got an invalid response. It is likely that the gateway timed out.<br>Your selection is probably too broad. Try a narrower one!"
-    }
-  }
 
   displayLoading(date: Date) {
     this.loadingDisplay = 'display: inline-block'

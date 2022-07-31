@@ -1,6 +1,20 @@
 <h2>Results</h2>
 <div id="result_content" class="result_text">
-    <p id="result_text" [innerHTML]="resultInnerHTML"></p>
+    <p id="result_text" [ngSwitch]="ResponseStatusCode">
+        <span *ngSwitchCase=200>A total of {{ResponseBody.Situations_found}} situations matching your description have
+            been found.<br>Out of those the CT's won <span class="nobr">{{ResponseBody.CT_win_percentage[1]}}<span
+                    class="supsub">+{{ResponseBody.CT_win_percentage[2]-ResponseBody.CT_win_percentage[1]}}<br />-{{ResponseBody.CT_win_percentage[1]-ResponseBody.CT_win_percentage[0]}}</span></span>
+            %.</span>
+        <span *ngSwitchCase=500>An error occured while processing your request: {{ResponseBody.errorMessage}}.</span>
+        <span *ngSwitchCase=408>The request timed out with the error message: {{ResponseBody.errorMessage}}!<br>Your
+            selection is probably too broad. Try a narrower one!</span>
+        <span *ngSwitchCase=0>The result will be shown here.<br>Go to the selection page and issue a query.</span>
+        <span *ngSwitchCase=-1>Got an invalid response. It is likely that the gateway timed out.<br>Your selection is
+            probably too broad. Try a
+            narrower one!</span>
+        <span *ngSwitchDefault>An unkown status code of {{ResponseStatusCode}} was returned from your query. I do not
+            know what happend here...</span>
+    </p>
     <div id="loading" [style]="loadingDisplay"></div>
     <p id="timer" [style]="timerDisplay">{{timerInnerHTML}}</p>
 </div>
