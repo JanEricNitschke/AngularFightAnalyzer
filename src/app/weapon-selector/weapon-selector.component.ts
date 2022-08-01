@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
   selector: 'app-weapon-selector',
@@ -8,6 +9,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class WeaponSelectorComponent implements OnInit {
 
   constructor() { }
+
   @Input() Name = ""
   @Input() only_allowed = false
   Type: string = "Classes"
@@ -17,7 +19,17 @@ export class WeaponSelectorComponent implements OnInit {
   @Output() AllowedEvent = new EventEmitter<string[]>();
   @Output() ForbiddenEvent = new EventEmitter<string[]>();
   @Output() TypeEvent = new EventEmitter<string>();
+
+  @ViewChildren(ButtonListComponent)
+  Children: QueryList<ButtonListComponent>
+
   ngOnInit(): void {
+  }
+
+  reset() {
+    this.Children.forEach(c => c.reset()); // or whatever you want to do to it here
+    this.Type = "Classes"
+    this.TypeEvent.emit(this.Type)
   }
 
   updateAllowed(allowed: string[]) {

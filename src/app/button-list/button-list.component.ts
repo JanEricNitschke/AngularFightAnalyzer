@@ -39,11 +39,15 @@ export class ButtonListComponent implements OnInit {
     return ''
   }
 
-  ngOnChanges(_: SimpleChanges): void {
+  reset() {
     this.getContent()
     this.ContentSelected = []
     this.contentCtrl.setValue('');
     this.submitContent(this.ContentSelected)
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
+    this.reset()
   }
 
   getContent(): void {

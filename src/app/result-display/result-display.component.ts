@@ -28,7 +28,6 @@ export class ResultDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     this.selectionService.selectionObservable$.subscribe((value) => {
-      this.selection = value;
       const date = new Date();
       this.displayLoading(date)
       this.call_API("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", value).subscribe(data => {

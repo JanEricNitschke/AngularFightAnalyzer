@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
+import { ButtonListComponent } from '../button-list/button-list.component';
 
 @Component({
   selector: 'app-map-selector',
@@ -13,6 +14,17 @@ export class MapSelectorComponent implements OnInit {
   @Output() ctEvent = new EventEmitter<string[]>();
   @Output() tEvent = new EventEmitter<string[]>();
   @Output() mapEvent = new EventEmitter<string>();
+
+  @ViewChildren(ButtonListComponent)
+  Children: QueryList<ButtonListComponent>
+
+
+  reset() {
+    this.Children.forEach(c => c.reset());
+    this.selectedMap = "de_dust2"
+    this.submitMap()
+  }
+
   constructor() { }
 
   ngOnInit(): void {

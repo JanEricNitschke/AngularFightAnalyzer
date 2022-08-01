@@ -19,6 +19,17 @@ export class TimeSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  reset() {
+    this.lowerBoundMin = '0'
+    this.upperBoundMin = '174'
+    this.valueMin = '0'
+    this.lowerBoundMax = '1'
+    this.upperBoundMax = '175'
+    this.valueMax = '175'
+    this.startEvent.emit(this.valueMin);
+    this.endEvent.emit(this.valueMax);
+  }
+
   adjust_end_min(): void {
     if (this.valueMin <= this.lowerBoundMin) {
       this.valueMin = this.lowerBoundMin

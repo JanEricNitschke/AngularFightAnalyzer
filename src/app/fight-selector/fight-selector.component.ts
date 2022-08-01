@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, ViewChild, QueryList } from '@angular/core';
 import { Router } from '@angular/router';
+import { MapSelectorComponent } from '../map-selector/map-selector.component';
 import { SelectionService } from '../selection.service';
+import { TimeSelectorComponent } from '../time-selector/time-selector.component';
+import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.component';
 
 @Component({
   selector: 'app-fight-selector',
@@ -23,10 +26,26 @@ export class FightSelectorComponent implements OnInit {
   StartTime: string = '0';
   EndTime: string = '175';
 
+  @ViewChildren(WeaponSelectorComponent)
+  WeaponsChildren: QueryList<WeaponSelectorComponent>
+  @ViewChild(MapSelectorComponent)
+  MapComponent!: MapSelectorComponent;
+  @ViewChild(TimeSelectorComponent)
+  TimeComponent!: TimeSelectorComponent;
+
+
 
   constructor(private router: Router, private selectionService: SelectionService) { }
 
   ngOnInit(): void {
+  }
+
+  resetAll() {
+    if (confirm("Are you sure you want to reset your current selection?")) {
+      this.WeaponsChildren.forEach(c => c.reset());
+      this.MapComponent.reset()
+      this.TimeComponent.reset()
+    }
   }
 
   CollectQuery() {

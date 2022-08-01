@@ -85,10 +85,6 @@ li {
     width: 150px;
 }
 
-/* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-    height: 40px !important
-} */
-
 ::ng-deep .mat-form-field-infix {
     padding: 0.25em 0 !important;
 }
