@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
-import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.component';
 import { MapsWeaponsService } from '../maps-weapons.service';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+
 @Component({
   selector: 'app-button-list',
   templateUrl: './button-list.component.html',
@@ -11,17 +14,35 @@ export class ButtonListComponent implements OnInit {
   ContentSelected: string[] = [];
   @Input() Name = '';
   @Input() ContentType = '';
-  @Input() Alignment = "Vertical"
   @Output() contentEvent = new EventEmitter<string[]>();
-  constructor(private mapsweaponsService: MapsWeaponsService) { }
+  contentCtrl = new FormControl();
+  filteredContent: Observable<string[]>;
+  constructor(private mapsweaponsService: MapsWeaponsService) {
+    this.filteredContent = this.contentCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(content => content ? this._filterContent(content) : this.ContentNotSelected.slice())
+      );
+  }
+
+  private _filterContent(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.ContentNotSelected.filter(content => content.toLowerCase().indexOf(filterValue) === 0);
+  }
 
   ngOnInit(): void {
     this.getContent();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  displayNull(_: any) {
+    return ''
+  }
+
+  ngOnChanges(_: SimpleChanges): void {
     this.getContent()
     this.ContentSelected = []
+    this.contentCtrl.setValue('');
     this.submitContent(this.ContentSelected)
   }
 
@@ -33,11 +54,13 @@ export class ButtonListComponent implements OnInit {
     this.ContentSelected.push(content)
     this.ContentNotSelected = this.ContentNotSelected.filter(item => item != content);
     this.submitContent(this.ContentSelected)
+    this.contentCtrl.setValue('');
   }
   removeElement(content: string): void {
     this.ContentSelected = this.ContentSelected.filter(item => item != content);
     this.ContentNotSelected.push(content)
     this.submitContent(this.ContentSelected)
+    this.contentCtrl.setValue('');
   }
 
   submitContent(value: string[]) {

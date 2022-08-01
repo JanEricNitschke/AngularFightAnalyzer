@@ -8,7 +8,7 @@
     </div>
 </div>
 <div class="flexbox">
-    <app-button-list [Name]='only_allowed ? "Allowed" : Type' [ContentType]="Type"
+    <app-button-list [Name]='only_allowed ? Type : "Allowed"' [ContentType]="Type"
         (contentEvent)="updateAllowed($event)"></app-button-list>
     <app-button-list *ngIf="!only_allowed" Name="Forbidden" [ContentType]="Type"
         (contentEvent)="updateForbidden($event)">

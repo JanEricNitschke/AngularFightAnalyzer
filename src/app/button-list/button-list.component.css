@@ -5,6 +5,12 @@ button {
     margin: 5px;
 }
 
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    /* row for  wide monitor, column for rest */
+}
+
 .dynamic_button {
     font-size: 20px;
     margin: 0px;
@@ -18,64 +24,79 @@ button {
 
 ul {
     list-style-type: none;
-    display: inline;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
     font-size: 20px;
     padding: 0px;
     overflow: hidden;
     background-color: #232F3E;
     margin: 0px;
+    flex-wrap: wrap;
 }
 
 li {
     margin: 0px;
+    padding: 0px;
     display: inline-block;
 }
 
-.dropbtn {
-    background-color: hsla(122, 0%, 46%, 100);
-    cursor: pointer;
-    vertical-align: top;
+::ng-deep .mat-focused .mat-form-field-label {
+    /*change color of label*/
+    color: #FF9900 !important;
+}
+
+::ng-deep .mat-form-field-label {
+    /*change color of label*/
+    color: #FF9900 !important;
+}
+
+::ng-deep .mat-form-field-outline {
+    /*change color of label*/
+    color: #FF9900 !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    /*change color of underline*/
+    background-color: #FF9900 !important;
+}
+
+::ng-deep.mat-input-placeholder {
+    /*change color of underline*/
+    background-color: #FF9900 !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+    /*change color of underline when focused*/
+    background-color: #FF9900 !important;
+}
+
+::ng-deep .mat-input-element::placeholder {
+    color: #FF9900;
+}
+
+::ng-deep .mat-form-field {
+    /*change color of label*/
     width: 150px;
-    margin: 0px;
 }
 
-.dropdown {
-    position: relative;
-    display: inline;
-    margin-left: 5px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-right: 10px;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    max-width: 150px;
-    margin: 0px;
-    padding: 0px;
-    z-index: 1;
-    left: 0;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-    margin: 0px;
-    padding: 0px;
-}
-
-.dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-}
-
-.addBtn {
-    margin: 0px;
-    padding: 0px;
+::ng-deep .mat-input-element {
+    /*change color of label*/
     width: 150px;
-    background-color: aquamarine;
-    display: inline
 }
+
+/* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    height: 40px !important
+} */
+
+::ng-deep .mat-form-field-infix {
+    padding: 0.25em 0 !important;
+}
+
+::ng-deep .mat-form-field-label {
+    transform: translateY(-12px) !important;
+}
+
 
 * {
     font-family: Arial, Helvetica, sans-serif;

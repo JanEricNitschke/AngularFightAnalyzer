@@ -1,12 +1,19 @@
-<div class="dropdown">
-    <button class="dropbtn">{{Name}}</button>
-    <div class="dropdown-content">
-        <button class="addBtn" *ngFor="let add_content of ContentNotSelected"
-            (click)="addElement(add_content)">{{add_content}}</button>
-    </div>
+<div class="flexbox">
+    <mat-form-field appearance="outline" style="margin-bottom: -1.25em" class="form-field">
+        <mat-label>{{Name}}</mat-label>
+        <input matInput type="text" [attr.aria-label]="Name" [formControl]="contentCtrl" [matAutocomplete]="auto"
+            #autoInput #trigger="matAutocompleteTrigger">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)='addElement($event.option.value)'
+            [displayWith]="displayNull">
+            <mat-option *ngFor="let add_content of filteredContent | async" [value]="add_content"
+                (click)="$event.stopPropagation(); trigger.openPanel()">
+                {{add_content}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <ul>
+        <li *ngFor="let remove_content of ContentSelected">
+            <button class="dynamic_button" (click)="removeElement(remove_content)">{{remove_content}}</button>
+        </li>
+    </ul>
 </div>
-<ul>
-    <li *ngFor="let remove_content of ContentSelected">
-        <button class="dynamic_button" (click)="removeElement(remove_content)">{{remove_content}}</button>
-    </li>
-</ul>
