@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { SelectionService } from '../selection.service';
 import { Result } from "../result"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-result-display',
   templateUrl: './result-display.component.html',
   styleUrls: ['./result-display.component.css']
 })
-export class ResultDisplayComponent implements OnInit {
+export class ResultDisplayComponent implements OnInit, OnDestroy {
   ResponseBody: Result = {
     Situations_found: 0,
     CT_win_percentage: [0, 0, 0],
@@ -23,11 +24,11 @@ export class ResultDisplayComponent implements OnInit {
   timerInnerHTML: string = ''
   ResponseStatusCode: number = 0;
   constructor(private http: HttpClient, private router: Router, private selectionService: SelectionService) { }
-
+  _selectionServiceSubscription: Subscription;
   selection: any;
 
   ngOnInit(): void {
-    this.selectionService.selectionObservable$.subscribe((value) => {
+    this._selectionServiceSubscription = this.selectionService.selectionObservable$.subscribe((value) => {
       const date = new Date();
       this.displayLoading(date)
       this.call_API("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", value).subscribe(data => {
@@ -38,7 +39,9 @@ export class ResultDisplayComponent implements OnInit {
     });
   }
 
-
+  ngOnDestroy() {
+    this._selectionServiceSubscription.unsubscribe()
+  }
 
   displayLoading(date: Date) {
     this.loadingDisplay = 'display: inline-block'
