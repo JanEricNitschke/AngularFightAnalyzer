@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { SelectionService } from '../selection.service';
 import { Result } from "../result"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -23,6 +23,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   timerDisplay: string = 'display: none'
   timerInnerHTML: string = ''
   ResponseStatusCode: number = 0;
+
   constructor(private http: HttpClient, private router: Router, private selectionService: SelectionService) { }
   _selectionServiceSubscription: Subscription;
   selection: any;
@@ -81,6 +82,10 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   GoToSelector() {
     this.router.navigate(['selector']);
+  }
+
+  GoToExplanation() {
+    this.router.navigate(['explanation']);
   }
 
 

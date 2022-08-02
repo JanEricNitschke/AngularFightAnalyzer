@@ -1,0 +1,20 @@
+<h2>Introduction/Explanation:</h2>
+<h3>Have you argued with someone over whether it is smart to peek mid at the start of a round as CT on d2 or T on
+    mirage?<br>Or whether it is a good idea to swing bottom of mid as a T on inferno?</h3>
+<p>Usually these discussions go nowhere because both sides only have feelings or at best abstract reasons to support
+    their position.</p>
+<p>With this app i want to give you the opportunity to support or refute your argument with some real data.</p>
+<p>This app allows you to to determine the CT win percentage for fights filtered by map, victim and attacker position
+    and weapons and fight time. See below for some concrete examples.</p>
+<p>However please note that the results shown here are not the be all end all for such discussions.<br>The filters here
+    are somewhat crude and do not take into account any further context like teammates, nades or bomb status. So you
+    still have to use your brain when interpreting the results.</p>
+<h2>Examples:</h2>
+<mat-button-toggle-group name="fontStyle" aria-label="Font Style" [(ngModel)]="selectedExample">
+    <mat-button-toggle *ngFor="let example of example_keys" [value]="example">{{example_map.get(example)![1]}}
+    </mat-button-toggle>
+</mat-button-toggle-group>
+<div class="flexbox">
+    <img *ngIf="selectedExample" [src]="example_map.get(selectedExample)![0]" class="example_img">
+</div>
+<button type="button" (click)="GoToSelector()">Analyze your own situation</button>

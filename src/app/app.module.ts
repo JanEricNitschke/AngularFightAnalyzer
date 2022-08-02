@@ -15,6 +15,8 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExplanationComponent } from './explanation/explanation.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     WeaponSelectorComponent,
     TimeSelectorComponent,
     ButtonListComponent,
-    InformationDisplayComponent
+    InformationDisplayComponent,
+    ExplanationComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
+    MatButtonToggleModule,
     BrowserAnimationsModule,
   ],
   providers: [],

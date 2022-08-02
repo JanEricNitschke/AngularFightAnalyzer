@@ -1,0 +1,38 @@
+p {
+    color: #f9f9f9;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.example_img {
+    max-width: 90vmin;
+    width: 70vw;
+    height: auto;
+    border: 5px solid rgb(221, 213, 213);
+}
+
+.example_text {
+    width: 500px;
+}
+
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+button {
+    width: auto;
+}
+
+@media only screen and (orientation: portrait) {
+    .example_img {
+        width: 97vw;
+        max-width: 97vw;
+    }
+
+    .flexbox_outside {
+        flex-direction: column;
+    }
+}

@@ -1,5 +1,7 @@
 <h2>Fight selector</h2>
-<h3>Choose the specifics of which fight you want to analyze</h3>
+<h3>Choose the specifics of which fight you want to analyze or <nav><a routerLink="/explanation">go back to
+            explanation</a></nav>
+</h3>
 <div class="flexbox_outside">
     <app-map-selector (ctEvent)="updateCTPositions($event)" (tEvent)="updateTPositions($event)"
         (mapEvent)="updateMap($event)"></app-map-selector>

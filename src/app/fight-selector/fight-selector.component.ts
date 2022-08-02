@@ -69,6 +69,10 @@ export class FightSelectorComponent implements OnInit {
     this.router.navigate(['result']);
   }
 
+  GoToExplanation() {
+    this.router.navigate(['explanation']);
+  }
+
   updateStartTime(start_time: string) {
     this.StartTime = start_time
   }
