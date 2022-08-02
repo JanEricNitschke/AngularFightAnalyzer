@@ -61,11 +61,10 @@ export class FightSelectorComponent implements OnInit {
       },
       "positions": { "CT": this.CTPositions, "T": this.TPositions },
       "use_weapons_classes": { "CT": this.CTType.toLowerCase(), "T": this.TType.toLowerCase(), "Kill": this.KillType.toLowerCase() },
-      "times": { "start": this.StartTime, "end": parseInt(this.EndTime) == 175 ? "10000" : this.EndTime }
+      "times": { "start": this.StartTime, "end": this.EndTime == "175" ? "10000" : this.EndTime }
     }
     // using built in JSON utility package turn object to string and store in a variable
-    const raw = JSON.stringify(event_data);
-    this.selectionService.setSelection(raw);
+    this.selectionService.setSelection(event_data);
     this.router.navigate(['result']);
   }
 

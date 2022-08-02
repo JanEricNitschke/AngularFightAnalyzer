@@ -47,6 +47,12 @@ h3 {
     animation: spin 1s infinite linear;
 }
 
+.flexbox {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
 
 
 @keyframes spin {
@@ -64,4 +70,10 @@ h3 {
     font-size: 4rem;
     margin: 0px;
     padding: 0px;
+}
+
+@media only screen and (orientation: portrait) {
+    .flexbox {
+        flex-direction: column;
+    }
 }
