@@ -42,8 +42,8 @@ li {
     display: inline-block;
 }
 
-::ng-deep .mat-form-field {
-    margin-bottom: -1.25em;
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
