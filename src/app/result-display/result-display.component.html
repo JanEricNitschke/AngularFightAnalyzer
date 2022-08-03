@@ -4,7 +4,8 @@
         <p id="result_text" [ngSwitch]="ResponseStatusCode">
             <span *ngSwitchCase=200>A total of {{ResponseBody.Situations_found}} situations matching your description
                 have
-                been found.<br>Out of those the CT's won <span class="nobr">{{ResponseBody.CT_win_percentage[1]}}<span
+                been found for your nominal time range of {{Request.times.start}}-{{Request.times.end}}.<br>Out of
+                those the CT's won <span class="nobr">{{ResponseBody.CT_win_percentage[1]}}<span
                         class="supsub">+{{ResponseBody.CT_win_percentage[2]-ResponseBody.CT_win_percentage[1]}}<br />-{{ResponseBody.CT_win_percentage[1]-ResponseBody.CT_win_percentage[0]}}</span></span>
                 %.</span>
             <span *ngSwitchCase=500>An error occured while processing your request:
@@ -22,6 +23,10 @@
         </p>
         <div id="loading" [style]="loadingDisplay"></div>
         <p id="timer" [style]="timerDisplay">{{timerInnerHTML}}</p>
+    </div>
+    <div class="chart-wrapper">
+        <canvas baseChart [type]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions">
+        </canvas>
     </div>
 </div>
 <button type="button" (click)="GoToSelector()">Back to selector</button>

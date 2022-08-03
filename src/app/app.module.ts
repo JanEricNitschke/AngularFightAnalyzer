@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplanationComponent } from './explanation/explanation.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatInputModule,
     MatButtonToggleModule,
     BrowserAnimationsModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

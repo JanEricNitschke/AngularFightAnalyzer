@@ -49,10 +49,23 @@ h3 {
 
 .flexbox {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
 }
 
+
+
+.chart-wrapper {
+    display: block;
+    width: 95vw;
+    min-width: 800px;
+    max-width: 95vw;
+    height: 50vh;
+    min-height: 300px;
+    max-height: 50vh;
+    border-radius: 20px;
+    background-attachment: fixed;
+}
 
 
 @keyframes spin {
