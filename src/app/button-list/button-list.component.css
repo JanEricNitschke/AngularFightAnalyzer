@@ -16,6 +16,7 @@ button {
     margin: 0px;
     /* padding: 0px; */
     text-align: center;
+    width: auto;
 }
 
 .dynamic_button:hover {
@@ -39,6 +40,10 @@ li {
     margin: 0px;
     padding: 0px;
     display: inline-block;
+}
+
+::ng-deep .mat-form-field {
+    margin-bottom: -1.25em;
 }
 
 ::ng-deep .mat-focused .mat-form-field-label {
@@ -96,22 +101,4 @@ li {
 
 * {
     font-family: Arial, Helvetica, sans-serif;
-}
-
-@media only screen and (orientation: portrait) {
-    .dropdown {
-        display: inline;
-    }
-
-    ul {
-        display: inline;
-    }
-
-    li {
-        display: inline-block;
-    }
-
-    .dynamic_button {
-        width: auto;
-    }
 }

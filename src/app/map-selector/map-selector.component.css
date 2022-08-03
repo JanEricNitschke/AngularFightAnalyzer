@@ -6,8 +6,7 @@ label {
 }
 
 .map_hull {
-    max-width: 88vmin;
-    width: 70vw;
+    width: 99%;
     height: auto;
 }
 
@@ -15,10 +14,17 @@ label {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    max-width: 88vmin;
+    width: 70vw;
 }
 
 @media only screen and (orientation: portrait) {
     .map_hull {
+        width: 97vw;
+        max-width: 97vw;
+    }
+
+    .flexbox {
         width: 97vw;
         max-width: 97vw;
     }
