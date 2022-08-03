@@ -36,16 +36,6 @@ h3 {
     text-align: left;
 }
 
-#loading {
-    width: 2rem;
-    height: 2rem;
-    border: 5px solid #f3f3f3;
-    border-top: 6px solid #9c41f2;
-    border-bottom: 6px solid #9c41f2;
-    border-radius: 100%;
-    display: none;
-    animation: spin 1s infinite linear;
-}
 
 .flexbox {
     display: flex;
@@ -67,22 +57,26 @@ h3 {
     background-attachment: fixed;
 }
 
+.loadingdiv {
+    display: flex;
+    flex-direction: row;
+}
 
-@keyframes spin {
-    from {
-        transform: rotate(0deg);
-    }
+::ng-deep.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #FF9900;
+    display: inline-flex;
+}
 
-    to {
-        transform: rotate(360deg);
-    }
+::ng-deep.mat-progress-spinner .mat-spinner {
+    display: inline-flex;
 }
 
 #timer {
-    display: none;
+    display: inline-flex;
     font-size: 4rem;
     margin: 0px;
-    padding: 0px;
+    padding: 5px;
 }
 
 @media only screen and (orientation: portrait) {

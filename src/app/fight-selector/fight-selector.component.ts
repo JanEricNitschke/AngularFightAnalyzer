@@ -25,6 +25,7 @@ export class FightSelectorComponent implements OnInit {
   TType: string = 'Classes';
   StartTime: string = '0';
   EndTime: string = '175';
+  PerformScan: boolean = true;
 
   @ViewChildren(WeaponSelectorComponent)
   WeaponsChildren: QueryList<WeaponSelectorComponent>
@@ -50,18 +51,20 @@ export class FightSelectorComponent implements OnInit {
 
   CollectQuery() {
     const event_data = {
-      "map_name": this.Map,
-      "weapons": {
-        "Kill": this.KillType == "Weapons" ? this.KillAllowed : [], "T": this.TType == "Weapons" ? { "Allowed": this.TAllowed, "Forbidden": this.TForbidden } : { "Allowed": [], "Forbidden": [] },
-        "CT": this.CTType == "Weapons" ? { "Allowed": this.CTAllowed, "Forbidden": this.CTForbidden } : { "Allowed": [], "Forbidden": [] }
-      },
-      "classes": {
-        "Kill": this.KillType == "Classes" ? this.KillAllowed : [], "T": this.TType == "Classes" ? { "Allowed": this.TAllowed, "Forbidden": this.TForbidden } : { "Allowed": [], "Forbidden": [] },
-        "CT": this.CTType == "Classes" ? { "Allowed": this.CTAllowed, "Forbidden": this.CTForbidden } : { "Allowed": [], "Forbidden": [] }
-      },
-      "positions": { "CT": this.CTPositions, "T": this.TPositions },
-      "use_weapons_classes": { "CT": this.CTType.toLowerCase(), "T": this.TType.toLowerCase(), "Kill": this.KillType.toLowerCase() },
-      "times": { "start": this.StartTime, "end": this.EndTime == "175" ? "10000" : this.EndTime }
+      data: {
+        "map_name": this.Map,
+        "weapons": {
+          "Kill": this.KillType == "Weapons" ? this.KillAllowed : [], "T": this.TType == "Weapons" ? { "Allowed": this.TAllowed, "Forbidden": this.TForbidden } : { "Allowed": [], "Forbidden": [] },
+          "CT": this.CTType == "Weapons" ? { "Allowed": this.CTAllowed, "Forbidden": this.CTForbidden } : { "Allowed": [], "Forbidden": [] }
+        },
+        "classes": {
+          "Kill": this.KillType == "Classes" ? this.KillAllowed : [], "T": this.TType == "Classes" ? { "Allowed": this.TAllowed, "Forbidden": this.TForbidden } : { "Allowed": [], "Forbidden": [] },
+          "CT": this.CTType == "Classes" ? { "Allowed": this.CTAllowed, "Forbidden": this.CTForbidden } : { "Allowed": [], "Forbidden": [] }
+        },
+        "positions": { "CT": this.CTPositions, "T": this.TPositions },
+        "use_weapons_classes": { "CT": this.CTType.toLowerCase(), "T": this.TType.toLowerCase(), "Kill": this.KillType.toLowerCase() },
+        "times": { "start": this.StartTime, "end": this.EndTime == "175" ? "10000" : this.EndTime }
+      }, performScan: this.PerformScan
     }
     // using built in JSON utility package turn object to string and store in a variable
     this.selectionService.setSelection(event_data);
@@ -78,6 +81,9 @@ export class FightSelectorComponent implements OnInit {
 
   updateEndTime(end_time: string) {
     this.EndTime = end_time
+  }
+  updateScanSetting(perform: boolean) {
+    this.PerformScan = perform
   }
 
   updateCTPositions(ct_positions: string[]) {
@@ -119,7 +125,6 @@ export class FightSelectorComponent implements OnInit {
   updateKillAllowed(allowed: string[]) {
     this.KillAllowed = allowed;
   }
-
 
   updateKillType(type: string) {
     this.KillType = type

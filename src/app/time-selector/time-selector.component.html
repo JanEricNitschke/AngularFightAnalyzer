@@ -1,12 +1,20 @@
-<label>Time range:</label>
-<app-information-display Type="Time"></app-information-display>
-<div id="start_time">
-    <label for="start_second" class="time_label">Start second:</label>
-    <input type="number" id="start_second" class="time_input" name="start_second" [min]=lowerBoundMin
-        [max]=upperBoundMin [(ngModel)]="valueMin" (blur)="adjust_end_min()">
-</div>
-<div id="end_time">
-    <label for="end_second" class="time_label">End second:</label>
-    <input type="number" id="end_second" class="time_input" name="end_second" [min]=lowerBoundMax [max]=upperBoundMax
-        [(ngModel)]="valueMax" (blur)="adjust_start_max()">
+<div class="flexbox">
+    <div>
+        <label>Time range:</label>
+        <app-information-display Type="Time"></app-information-display>
+    </div>
+    <div id="start_time">
+        <label for="start_second" class="time_label">Start second:</label>
+        <input type="number" id="start_second" class="time_input" name="start_second" [min]=lowerBoundMin
+            [max]=upperBoundMin [(ngModel)]="valueMin" (blur)="adjust_end_min()">
+    </div>
+    <div id="end_time">
+        <label for="end_second" class="time_label">End second:</label>
+        <input type="number" id="end_second" class="time_input" name="end_second" [min]=lowerBoundMax
+            [max]=upperBoundMax [(ngModel)]="valueMax" (blur)="adjust_start_max()">
+    </div>
+    <div>
+        <mat-slide-toggle [(ngModel)]="performScan" (change)="submitScan()" labelPosition="before">Scan:
+        </mat-slide-toggle>
+    </div>
 </div>

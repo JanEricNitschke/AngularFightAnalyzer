@@ -23,3 +23,28 @@ input {
     margin: 0px;
     padding: 0px;
 }
+
+.flexbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+::ng-deep.mat-slide-toggle {
+    /*change color of underline*/
+    color: #FF9900 !important;
+    font-size: 20px;
+    width: 120px;
+    display: inline-block;
+    padding: 5px;
+}
+
+::ng-deep.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+    /*change color of underline*/
+    background-color: #ffd699 !important;
+}
+
+::ng-deep.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+    /*change color of underline*/
+    background-color: #FF9900 !important;
+}

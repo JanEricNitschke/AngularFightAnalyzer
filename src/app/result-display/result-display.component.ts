@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { SelectionService } from '../selection.service';
 import { Result } from "../result"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subscription, forkJoin, switchMap } from 'rxjs';
-import { ChartDataset, ChartOptions, Scale } from 'chart.js';
+import { Subscription, forkJoin } from 'rxjs';
+import { ChartDataset, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
@@ -21,8 +21,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
-  loadingDisplay: string = 'display: none'
-  timerDisplay: string = 'display: none'
+  loading: boolean = false
   timerInnerHTML: string = ''
   ResponseStatusCode: number = 0;
   Request: any;
@@ -34,6 +33,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   step: number = 20;
   maximum: number = 175;
   minimum: number = 0;
+  showCanvas: boolean = false;
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
@@ -142,42 +142,60 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._selectionServiceSubscription = this.selectionService.selectionObservable$.subscribe((value) => {
-      this.Request = JSON.parse(JSON.stringify(value))
-      const lower = parseInt(value.times.start)
-      const upper = parseInt(value.times.end) < 175 ? parseInt(value.times.end) : 175
+      let data = value.data
+      if (data.map_name == '') {
+        this.ResponseStatusCode = -17
+        return
+      }
       const date = new Date();
       this.displayLoading(date)
-      if ((lower > 175 - upper)) {
-        this.scanLowerRange(lower, upper, value)
+      this.Request = JSON.parse(JSON.stringify(data))
+      if (value.performScan) {
+        this.showCanvas = true
+        const lower = parseInt(data.times.start)
+        const upper = parseInt(data.times.end) < 175 ? parseInt(data.times.end) : 175
+        if ((lower > 175 - upper)) {
+          this.scanLowerRange(lower, upper, data)
+        }
+        else {
+          this.scanUpperRange(lower, upper, data)
+        }
       }
       else {
-        this.scanUpperRange(lower, upper, value)
+        this.call_API("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", data).subscribe(data => {
+          this.ResponseBody = JSON.parse(data.body);
+          this.ResponseStatusCode = data.statusCode;
+          this.hideLoading()
+        })
       }
     });
   }
 
-  async scanUpperRange(lower: number, upper: number, value: any) {
+  async scanUpperRange(lower: number, upper: number, data: any) {
     const callArray = []
-    this.chartOptions.plugins!.title!.text = "Scan over lower upper of time range" //"Lower value of time range"
+    this.chartOptions.plugins!.title!.text = "Scan over lower upper of time range" //"Lower data of time range"
     for (let i = lower + 1 + (upper - 1 - lower) % this.step; i < this.maximum + 1; i += this.step) {
       if (i + this.step > this.maximum) {
-        value.times.end = (10000).toString()
+        data.times.end = (10000).toString()
       }
       else {
-        value.times.end = i.toString()
+        data.times.end = i.toString()
       }
-      callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(value)), this.httpOptions))
+      callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
     }
     forkJoin(callArray).subscribe((responses) => {
-      for (let i = lower + 1 + (upper - 1 - lower) % this.step; i < this.maximum + 1; i += this.step) {
-        const body = JSON.parse(responses[(i - (upper % this.step)) / this.step].body)
-        this.plotData[(i - (upper % this.step)) / this.step] = body.CT_win_percentage[1]
-        this.plotLower[(i - (upper % this.step)) / this.step] = body.CT_win_percentage[0]
-        this.plotUpper[(i - (upper % this.step)) / this.step] = body.CT_win_percentage[2]
-        this.plotLabels[(i - (upper % this.step)) / this.step] = i
+      const start = lower + 1 + (upper - 1 - lower) % this.step
+      const offset = start - (start % this.step)
+      for (let i = start; i < this.maximum + 1; i += this.step) {
+        const index = (i - offset - (upper % this.step)) / this.step
+        const body = JSON.parse(responses[index].body)
+        this.plotData[index] = body.CT_win_percentage[1]
+        this.plotLower[index] = body.CT_win_percentage[0]
+        this.plotUpper[index] = body.CT_win_percentage[2]
+        this.plotLabels[index] = i
         if (i == upper) {
           this.ResponseBody = body;
-          this.ResponseStatusCode = responses[(i - (upper % this.step)) / this.step].statusCode;
+          this.ResponseStatusCode = responses[index].statusCode;
         }
       }
       this.hideLoading()
@@ -185,23 +203,26 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     })
   }
 
-  async scanLowerRange(lower: number, upper: number, value: any) {
+  async scanLowerRange(lower: number, upper: number, data: any) {
     const callArray = []
-    this.chartOptions.plugins!.title!.text = "Scan over lower value of time range" //"Lower value of time range"
+    this.chartOptions.plugins!.title!.text = "Scan over lower data of time range" //"Lower data of time range"
     for (let i = this.minimum + (lower - this.minimum) % this.step; i < upper; i += this.step) {
-      value.times.start = i.toString()
-      callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(value)), this.httpOptions))
+      data.times.start = i.toString()
+      callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
     }
     forkJoin(callArray).subscribe((responses) => {
+      const start = this.minimum + (lower - this.minimum) % this.step
+      const offset = start - (start % this.step)
       for (let i = this.minimum + (lower - this.minimum) % this.step; i < upper; i += this.step) {
-        const body = JSON.parse(responses[(i - (lower % this.step)) / this.step].body)
-        this.plotData[(i - (lower % this.step)) / this.step] = body.CT_win_percentage[1]
-        this.plotLower[(i - (lower % this.step)) / this.step] = body.CT_win_percentage[0]
-        this.plotUpper[(i - (lower % this.step)) / this.step] = body.CT_win_percentage[2]
-        this.plotLabels[(i - (lower % this.step)) / this.step] = i
+        const index = (i - offset - (lower % this.step)) / this.step
+        const body = JSON.parse(responses[index].body)
+        this.plotData[index] = body.CT_win_percentage[1]
+        this.plotLower[index] = body.CT_win_percentage[0]
+        this.plotUpper[index] = body.CT_win_percentage[2]
+        this.plotLabels[index] = i
         if (i == lower) {
           this.ResponseBody = body;
-          this.ResponseStatusCode = responses[(i - (lower % this.step)) / this.step].statusCode;
+          this.ResponseStatusCode = responses[index].statusCode;
         }
       }
       this.hideLoading()
@@ -219,13 +240,12 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   }
 
   displayLoading(date: Date) {
-    this.loadingDisplay = 'display: inline-block'
-    this.timerDisplay = 'display: inline'
+    this.loading = true
     this.updateTime(date)
   }
 
   updateTime(oldDate: Date) {
-    if (this.timerDisplay != 'display: none') {
+    if (this.loading) {
       const newDate = new Date();
       setTimeout(this.updateTime.bind(this), 1000, oldDate);
       this.timerInnerHTML = this.msToHMS(newDate.getTime() - oldDate.getTime());
@@ -250,8 +270,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   // hiding loading
   hideLoading() {
-    this.loadingDisplay = 'display: none'
-    this.timerDisplay = 'display: none'
+    this.loading = false
   }
 
   GoToSelector() {
@@ -260,5 +279,9 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   GoToExplanation() {
     this.router.navigate(['explanation']);
+  }
+
+  call_API(url: string, raw: any) {
+    return this.http.post<any>(url, raw, this.httpOptions)
   }
 }
