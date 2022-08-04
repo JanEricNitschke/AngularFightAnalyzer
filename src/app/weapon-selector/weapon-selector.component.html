@@ -1,6 +1,8 @@
 <div class="radio_div">
-    <label innerHTML={{Name}}></label>
-    <app-information-display [Type]="Name"></app-information-display>
+    <div class="label_flex">
+        <label innerHTML={{Name}}></label>
+        <app-information-display [Type]="Name"></app-information-display>
+    </div>
     <div *ngFor="let choice of Choices">
         <input type="radio" id='{{Name}}_{{choice}}' name='{{Name}}_weapons_classes' [value]="choice" [(ngModel)]="Type"
             (ngModelChange)="submitType()" />

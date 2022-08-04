@@ -18,6 +18,12 @@ label {
     width: 70vw;
 }
 
+.map_select_div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 @media only screen and (orientation: portrait) {
     .map_hull {
         width: 97vw;

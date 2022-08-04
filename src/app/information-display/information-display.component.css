@@ -1,13 +1,15 @@
 .tooltip {
-    position: relative;
-    display: inline-block;
+    /* position: relative; */
+    display: flex;
+    flex-direction: row;
     color: #f9f9f9;
     /* border-bottom: 1px dotted black; */
 }
 
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 40vw;
+    /* width: 40vw; */
+    width: auto;
     background-color: black;
     color: #fff;
     text-align: center;

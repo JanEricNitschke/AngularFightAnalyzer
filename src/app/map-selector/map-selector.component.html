@@ -1,5 +1,5 @@
 <div class="flexbox">
-    <div>
+    <div class="map_select_div">
         <label for="map_select">Map:</label>
         <select id="map_select" [(ngModel)]="selectedMap" (ngModelChange)="submitMap()">
             <option *ngFor="let map of maps" [value]=map>{{map}}</option>

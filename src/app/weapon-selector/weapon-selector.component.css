@@ -23,6 +23,12 @@ input {
     /* row for  wide monitor, column for rest */
 }
 
+.label_flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 @media only screen and (orientation: portrait) {
     .flexbox {
         flex-direction: column;

@@ -30,6 +30,12 @@ input {
     align-items: flex-start;
 }
 
+.label_flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 ::ng-deep.mat-slide-toggle {
     /*change color of underline*/
     color: #FF9900 !important;
