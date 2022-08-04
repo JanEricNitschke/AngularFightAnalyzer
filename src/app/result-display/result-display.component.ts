@@ -30,7 +30,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   plotLower: number[] = [];
   plotUpper: number[] = [];
   plotLabels: number[] = [];
-  step: number = 20;
+  step: number = 10;
   maximum: number = 175;
   minimum: number = 0;
   showCanvas: boolean = false;
@@ -173,7 +173,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   async scanUpperRange(lower: number, upper: number, data: any) {
     const callArray = []
-    this.chartOptions.plugins!.title!.text = "Scan over lower upper of time range" //"Lower data of time range"
+    this.chartOptions.plugins!.title!.text = "Scan over upper value of time range" //"Lower data of time range"
     for (let i = lower + 1 + (upper - 1 - lower) % this.step; i < this.maximum + 1; i += this.step) {
       if (i + this.step > this.maximum) {
         data.times.end = (10000).toString()
@@ -205,7 +205,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   async scanLowerRange(lower: number, upper: number, data: any) {
     const callArray = []
-    this.chartOptions.plugins!.title!.text = "Scan over lower data of time range" //"Lower data of time range"
+    this.chartOptions.plugins!.title!.text = "Scan over lower value of time range" //"Lower data of time range"
     for (let i = this.minimum + (lower - this.minimum) % this.step; i < upper; i += this.step) {
       data.times.start = i.toString()
       callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
