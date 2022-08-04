@@ -6,5 +6,5 @@ export const informationmap = new Map<string, string>([
     ["T", "Select whether you want to filter directly by weapons or generally by classes for T's.<br>The players must have had at least one matching weapon in their inventory.<br> If nothing is specified then no filter is applied on the T's inventories."],
     ["Time", "Select the time range you want to consider.<br> The value for a kill is how much time has passed between the end of freeze time and the kill, NOT the game time when the kill occured.<br>\
      Pauses affect this time.So kills that occur in a round after a pause will have a time larger than the usual total round time.<br> If you do not want to set an upper limit on the time you can set it to 175.\
-      This will include those kills that were pushed back because of a pause."],
+      This will include those kills that were pushed back because of a pause.<br>The 'Scan' toggle determines if a scan should be performed over the edge range that is further from its default value."],
 ]);
