@@ -42,8 +42,8 @@ export class SelectionService {
         "T": "weapons"
       },
       "times": {
-        "start": '0',
-        "end": '175'
+        "start": 0,
+        "end": 175
       }
     }, performScan: true
   });

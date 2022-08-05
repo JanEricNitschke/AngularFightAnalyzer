@@ -152,8 +152,8 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       this.Request = JSON.parse(JSON.stringify(data))
       if (value.performScan) {
         this.showCanvas = true
-        const lower = parseInt(data.times.start)
-        const upper = parseInt(data.times.end) < 175 ? parseInt(data.times.end) : 175
+        const lower = data.times.start
+        const upper = data.times.end < 175 ? data.times.end : 175
         if ((lower > 175 - upper)) {
           this.scanLowerRange(lower, upper, data)
         }
@@ -176,10 +176,10 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     this.chartOptions.plugins!.title!.text = "Scan over upper value of time range" //"Lower data of time range"
     for (let i = lower + 1 + (upper - 1 - lower) % this.step; i < this.maximum + 1; i += this.step) {
       if (i + this.step > this.maximum) {
-        data.times.end = (10000).toString()
+        data.times.end = 10000
       }
       else {
-        data.times.end = i.toString()
+        data.times.end = i
       }
       callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
     }
@@ -207,7 +207,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     const callArray = []
     this.chartOptions.plugins!.title!.text = "Scan over lower value of time range" //"Lower data of time range"
     for (let i = this.minimum + (lower - this.minimum) % this.step; i < upper; i += this.step) {
-      data.times.start = i.toString()
+      data.times.start = i
       callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
     }
     forkJoin(callArray).subscribe((responses) => {

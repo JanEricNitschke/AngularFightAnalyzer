@@ -11,7 +11,7 @@ export interface RequestData {
         },
         "positions": { "CT": string[], "T": string[] },
         "use_weapons_classes": { "CT": string, "T": string, "Kill": string },
-        "times": { "start": string, "end": string }
+        "times": { "start": number, "end": number }
     }
     performScan: boolean
 }
