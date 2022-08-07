@@ -34,8 +34,6 @@ export class FightSelectorComponent implements OnInit {
   @ViewChild(TimeSelectorComponent)
   TimeComponent!: TimeSelectorComponent;
 
-
-
   constructor(private router: Router, private selectionService: SelectionService) { }
 
   ngOnInit(): void {
@@ -66,7 +64,6 @@ export class FightSelectorComponent implements OnInit {
         "times": { "start": parseInt(this.StartTime), "end": this.EndTime == "175" ? 10000 : parseInt(this.EndTime) }
       }, performScan: this.PerformScan
     }
-    // using built in JSON utility package turn object to string and store in a variable
     this.selectionService.setSelection(event_data);
     this.router.navigate(['result']);
   }
@@ -129,5 +126,4 @@ export class FightSelectorComponent implements OnInit {
   updateKillType(type: string) {
     this.KillType = type
   }
-
 }

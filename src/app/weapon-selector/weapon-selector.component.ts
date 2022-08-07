@@ -6,22 +6,23 @@ import { ButtonListComponent } from '../button-list/button-list.component';
   templateUrl: './weapon-selector.component.html',
   styleUrls: ['./weapon-selector.component.css']
 })
+
 export class WeaponSelectorComponent implements OnInit {
 
-  constructor() { }
-
-  @Input() Name = ""
-  @Input() only_allowed = false
   Type: string = "Classes"
   Choices: string[] = ["Classes", "Weapons"]
   Allowed: string[] = [];
   Forbidden: string[] = [];
+  @Input() Name = ""
+  @Input() only_allowed = false
   @Output() AllowedEvent = new EventEmitter<string[]>();
   @Output() ForbiddenEvent = new EventEmitter<string[]>();
   @Output() TypeEvent = new EventEmitter<string>();
 
   @ViewChildren(ButtonListComponent)
   Children: QueryList<ButtonListComponent>
+
+  constructor() { }
 
   ngOnInit(): void {
   }

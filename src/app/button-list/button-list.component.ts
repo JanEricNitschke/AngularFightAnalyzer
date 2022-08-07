@@ -9,14 +9,16 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './button-list.component.html',
   styleUrls: ['./button-list.component.css']
 })
+
 export class ButtonListComponent implements OnInit {
   ContentNotSelected: string[] = [];
   ContentSelected: string[] = [];
-  @Input() Name = '';
-  @Input() ContentType = '';
-  @Output() contentEvent = new EventEmitter<string[]>();
   contentCtrl = new FormControl();
   filteredContent: Observable<string[]>;
+  @Input() ContentType = '';
+  @Input() Name = '';
+  @Output() contentEvent = new EventEmitter<string[]>();
+
   constructor(private mapsweaponsService: MapsWeaponsService) {
     this.filteredContent = this.contentCtrl.valueChanges
       .pipe(
@@ -25,18 +27,20 @@ export class ButtonListComponent implements OnInit {
       );
   }
 
-  private _filterContent(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.ContentNotSelected.filter(content => content.toLowerCase().indexOf(filterValue) === 0);
-  }
-
   ngOnInit(): void {
     this.getContent();
   }
 
+  ngOnChanges(_: SimpleChanges): void {
+    this.reset()
+  }
+
   displayNull(_: any) {
     return ''
+  }
+
+  getContent(): void {
+    this.mapsweaponsService.getList(this.ContentType).subscribe(list => this.ContentNotSelected = list)
   }
 
   reset() {
@@ -44,14 +48,6 @@ export class ButtonListComponent implements OnInit {
     this.ContentSelected = []
     this.contentCtrl.setValue('');
     this.submitContent(this.ContentSelected)
-  }
-
-  ngOnChanges(_: SimpleChanges): void {
-    this.reset()
-  }
-
-  getContent(): void {
-    this.mapsweaponsService.getList(this.ContentType).subscribe(list => this.ContentNotSelected = list)
   }
 
   addElement(content: string): void {
@@ -69,5 +65,11 @@ export class ButtonListComponent implements OnInit {
 
   submitContent(value: string[]) {
     this.contentEvent.emit(value);
+  }
+
+  private _filterContent(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.ContentNotSelected.filter(content => content.toLowerCase().indexOf(filterValue) === 0);
   }
 }

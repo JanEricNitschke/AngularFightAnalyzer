@@ -5,7 +5,9 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './time-selector.component.html',
   styleUrls: ['./time-selector.component.css']
 })
+
 export class TimeSelectorComponent implements OnInit {
+
   lowerBoundMin: string = '0'
   upperBoundMin: string = '174'
   valueMin: string = '0'
@@ -16,22 +18,10 @@ export class TimeSelectorComponent implements OnInit {
   @Output() startEvent = new EventEmitter<string>();
   @Output() endEvent = new EventEmitter<string>();
   @Output() scanEvent = new EventEmitter<boolean>();
+
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  reset() {
-    this.lowerBoundMin = '0'
-    this.upperBoundMin = '174'
-    this.valueMin = '0'
-    this.lowerBoundMax = '1'
-    this.upperBoundMax = '175'
-    this.valueMax = '175'
-    this.performScan = true
-    this.startEvent.emit(this.valueMin);
-    this.endEvent.emit(this.valueMax);
-    this.scanEvent.emit(this.performScan)
   }
 
   adjust_end_min(): void {
@@ -54,6 +44,19 @@ export class TimeSelectorComponent implements OnInit {
     }
     this.upperBoundMin = (parseInt(this.valueMax) - 1).toString()
     this.endEvent.emit(this.valueMax);
+  }
+
+  reset() {
+    this.lowerBoundMin = '0'
+    this.upperBoundMin = '174'
+    this.valueMin = '0'
+    this.lowerBoundMax = '1'
+    this.upperBoundMax = '175'
+    this.valueMax = '175'
+    this.performScan = true
+    this.startEvent.emit(this.valueMin);
+    this.endEvent.emit(this.valueMax);
+    this.scanEvent.emit(this.performScan)
   }
 
   submitScan(): void {

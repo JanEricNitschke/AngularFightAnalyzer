@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 export class ExplanationComponent implements OnInit {
 
   example_map = new Map<string, string[]>();
-  selectedExample: string = "";
   example_keys: string[];
+  selectedExample: string = "";
 
   constructor(private router: Router) { }
 

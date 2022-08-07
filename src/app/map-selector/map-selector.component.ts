@@ -18,16 +18,15 @@ export class MapSelectorComponent implements OnInit {
   @ViewChildren(ButtonListComponent)
   Children: QueryList<ButtonListComponent>
 
+  constructor() { }
+
+  ngOnInit(): void {
+  }
 
   reset() {
     this.Children.forEach(c => c.reset());
     this.selectedMap = "de_dust2"
     this.submitMap()
-  }
-
-  constructor() { }
-
-  ngOnInit(): void {
   }
 
   updateCTPositions(ct_positions: string[]) {

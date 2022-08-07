@@ -18,13 +18,15 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     CT_win_percentage: [0, 0, 0],
     sql: ''
   };
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
   loading: boolean = false
   timerInnerHTML: string = ''
   ResponseStatusCode: number = 0;
   Request: any;
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
+  _selectionServiceSubscription: Subscription;
 
   plotData: number[] = [];
   plotLower: number[] = [];
@@ -34,7 +36,6 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   maximum: number = 175;
   minimum: number = 0;
   showCanvas: boolean = false;
-
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   chartData: ChartDataset[] = [
@@ -80,10 +81,6 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
     scales: {
       xAxis: {
-        // display: false,
-        // grid: {
-        //   drawBorder: false
-        // }
         title: {
           text: "Scanned value",
           display: true,
@@ -117,7 +114,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
         filter: tooltipItem => tooltipItem.datasetIndex == 0,
         // ⤵️ tooltip main styles
         backgroundColor: 'white',
-        displayColors: false, // removes unnecessary legend
+        displayColors: false,
         padding: 10,
 
         // ⤵️ title
@@ -136,9 +133,6 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   };
 
   constructor(private http: HttpClient, private router: Router, private selectionService: SelectionService) { }
-
-  _selectionServiceSubscription: Subscription;
-  selection: any;
 
   ngOnInit(): void {
     this._selectionServiceSubscription = this.selectionService.selectionObservable$.subscribe((value) => {
@@ -169,6 +163,10 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
         })
       }
     });
+  }
+
+  ngOnDestroy() {
+    this._selectionServiceSubscription.unsubscribe()
   }
 
   async scanUpperRange(lower: number, upper: number, data: any) {
@@ -230,13 +228,8 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     })
   }
 
-
   private updateChart() {
     this.chart.ngOnChanges({});
-  }
-
-  ngOnDestroy() {
-    this._selectionServiceSubscription.unsubscribe()
   }
 
   displayLoading(date: Date) {
