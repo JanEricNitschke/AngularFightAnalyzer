@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { ButtonListComponent } from '../button-list/button-list.component';
+import { RequestData } from '../request-data';
 
 @Component({
   selector: 'app-weapon-selector',
@@ -13,7 +14,7 @@ export class WeaponSelectorComponent implements OnInit {
   Choices: string[] = ["Classes", "Weapons"]
   Allowed: string[] = [];
   Forbidden: string[] = [];
-  @Input() Name = ""
+  @Input() Name: string = ""
   @Input() only_allowed = false
   @Output() AllowedEvent = new EventEmitter<string[]>();
   @Output() ForbiddenEvent = new EventEmitter<string[]>();
@@ -27,10 +28,17 @@ export class WeaponSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setSettings(settings_data: RequestData) {
+    const thisType = (settings_data.data.use_weapons_classes as any)[this.Name];
+    this.Type = thisType.charAt(0).toUpperCase() + thisType.slice(1);
+    this.TypeEvent.emit(this.Type);
+    setTimeout(() => this.Children.forEach(c => this.only_allowed ? c.setSettings((settings_data.data as any)[this.Type.toLowerCase()][this.Name]) : c.setSettings((settings_data.data as any)[this.Type.toLowerCase()][this.Name][c.Name])));
+  }
+
   reset() {
     this.Children.forEach(c => c.reset()); // or whatever you want to do to it here
-    this.Type = "Classes"
-    this.TypeEvent.emit(this.Type)
+    this.Type = "Classes";
+    this.TypeEvent.emit(this.Type);
   }
 
   updateAllowed(allowed: string[]) {

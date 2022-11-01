@@ -6,6 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription, forkJoin } from 'rxjs';
 import { ChartDataset, ChartOptions } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
+import { RequestData } from "../request-data"
 
 @Component({
   selector: 'app-result-display',

@@ -1,4 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { RequestData } from '../request-data';
 
 @Component({
   selector: 'app-time-selector',
@@ -54,6 +55,19 @@ export class TimeSelectorComponent implements OnInit {
     this.upperBoundMax = '175'
     this.valueMax = '175'
     this.performScan = true
+    this.startEvent.emit(this.valueMin);
+    this.endEvent.emit(this.valueMax);
+    this.scanEvent.emit(this.performScan)
+  }
+
+  setSettings(settings_data: RequestData) {
+    this.valueMin = settings_data.data.times.start.toString()
+    this.valueMax = settings_data.data.times.end.toString()
+    this.lowerBoundMax = (parseInt(this.valueMin) + 1).toString()
+    this.upperBoundMin = (parseInt(this.valueMax) - 1).toString()
+    this.lowerBoundMin = '0'
+    this.upperBoundMax = '175'
+    this.performScan = settings_data.performScan
     this.startEvent.emit(this.valueMin);
     this.endEvent.emit(this.valueMax);
     this.scanEvent.emit(this.performScan)

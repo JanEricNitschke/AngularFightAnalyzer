@@ -15,6 +15,7 @@ export class ButtonListComponent implements OnInit {
   ContentSelected: string[] = [];
   contentCtrl = new FormControl();
   filteredContent: Observable<string[]>;
+  initialized: Boolean = false;
   @Input() ContentType = '';
   @Input() Name = '';
   @Output() contentEvent = new EventEmitter<string[]>();
@@ -29,10 +30,13 @@ export class ButtonListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getContent();
+    this.initialized = true
   }
 
   ngOnChanges(_: SimpleChanges): void {
-    this.reset()
+    if (this.initialized) {
+      this.reset()
+    }
   }
 
   displayNull(_: any) {
@@ -41,6 +45,15 @@ export class ButtonListComponent implements OnInit {
 
   getContent(): void {
     this.mapsweaponsService.getList(this.ContentType).subscribe(list => this.ContentNotSelected = list)
+  }
+
+  setSettings(list_data: string[]) {
+    this.ContentSelected = list_data
+    for (let value of list_data) {
+      this.ContentNotSelected = this.ContentNotSelected.filter(item => item != value);
+    }
+    this.contentCtrl.setValue('');
+    this.submitContent(this.ContentSelected)
   }
 
   reset() {

@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
 import { ButtonListComponent } from '../button-list/button-list.component';
+import { RequestData } from '../request-data';
 
 @Component({
   selector: 'app-map-selector',
@@ -23,10 +24,16 @@ export class MapSelectorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setSettings(settings_data: RequestData) {
+    this.selectedMap = settings_data.data.map_name;
+    this.submitMap();
+    setTimeout(() => this.Children.forEach(c => c.setSettings((settings_data.data.positions as any)[c.Name.split("_")[0]])));
+  }
+
   reset() {
     this.Children.forEach(c => c.reset());
-    this.selectedMap = "de_dust2"
-    this.submitMap()
+    this.selectedMap = "de_dust2";
+    this.submitMap();
   }
 
   updateCTPositions(ct_positions: string[]) {
@@ -40,7 +47,6 @@ export class MapSelectorComponent implements OnInit {
   }
 
   submitMap() {
-    this.mapEvent.emit(this.selectedMap)
+    this.mapEvent.emit(this.selectedMap);
   }
-
 }

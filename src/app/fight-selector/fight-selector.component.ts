@@ -2,8 +2,11 @@ import { Component, OnInit, ViewChildren, ViewChild, QueryList } from '@angular/
 import { Router } from '@angular/router';
 import { MapSelectorComponent } from '../map-selector/map-selector.component';
 import { SelectionService } from '../selection.service';
+import { ConsentService } from '../consent.service';
 import { TimeSelectorComponent } from '../time-selector/time-selector.component';
 import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.component';
+import { CookieService } from 'ngx-cookie-service';
+import { RequestData } from "../request-data"
 
 @Component({
   selector: 'app-fight-selector',
@@ -12,14 +15,15 @@ import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.comp
 })
 export class FightSelectorComponent implements OnInit {
 
-  Map: string = 'de_dust2'
+  cookie_name: string = '';
+  Map: string = 'de_dust2';
   CTPositions: string[] = [];
   TPositions: string[] = [];
   KillAllowed: string[] = [];
-  KillType: string = 'Classes'
+  KillType: string = 'Classes';
   CTAllowed: string[] = [];
   CTForbidden: string[] = [];
-  CTType: string = 'Classes'
+  CTType: string = 'Classes';
   TAllowed: string[] = [];
   TForbidden: string[] = [];
   TType: string = 'Classes';
@@ -34,20 +38,58 @@ export class FightSelectorComponent implements OnInit {
   @ViewChild(TimeSelectorComponent)
   TimeComponent!: TimeSelectorComponent;
 
-  constructor(private router: Router, private selectionService: SelectionService) { }
+  constructor(private router: Router, private selectionService: SelectionService, private cookieService: CookieService, private consentService: ConsentService) { }
 
   ngOnInit(): void {
+    this.cookie_name = this.consentService.cookie_name
+    // this.getCookie();
+  }
+
+  ngAfterViewInit(): void {
+    this.getCookie();
+  }
+
+
+  setCookie() {
+    if (this.consentService.consentGiven) {
+      const settings_data = this.collectQuery();
+      this.cookieService.set(this.cookie_name, JSON.stringify(settings_data), { expires: 365, path: "/", secure: true, sameSite: "Lax" });
+    }
+  }
+
+  setSettings(settings_data: RequestData) {
+    this.WeaponsChildren.forEach(c => c.setSettings(settings_data));
+    this.MapComponent.setSettings(settings_data);
+    this.TimeComponent.setSettings(settings_data);
+  }
+
+  isRequestData(obj: any): obj is RequestData {
+    return ((obj.performScan !== undefined) && (obj.data !== undefined));
+  }
+
+  getCookie() {
+    if (this.cookieService.check(this.cookie_name)) {
+      const value = this.cookieService.get(this.cookie_name);
+      const settings_data: RequestData = JSON.parse(value);
+      if (this.isRequestData(settings_data)) {
+        this.setSettings(settings_data);
+      }
+    }
+  }
+
+  deleteCookie() {
+    this.cookieService.delete(this.cookie_name);
   }
 
   resetAll() {
     if (confirm("Are you sure you want to reset your current selection?")) {
       this.WeaponsChildren.forEach(c => c.reset());
-      this.MapComponent.reset()
-      this.TimeComponent.reset()
+      this.MapComponent.reset();
+      this.TimeComponent.reset();
     }
   }
 
-  CollectQuery() {
+  collectQuery(): RequestData {
     const event_data = {
       data: {
         "map_name": this.Map,
@@ -61,69 +103,89 @@ export class FightSelectorComponent implements OnInit {
         },
         "positions": { "CT": this.CTPositions, "T": this.TPositions },
         "use_weapons_classes": { "CT": this.CTType.toLowerCase(), "T": this.TType.toLowerCase(), "Kill": this.KillType.toLowerCase() },
-        "times": { "start": parseInt(this.StartTime), "end": this.EndTime == "175" ? 10000 : parseInt(this.EndTime) }
+        "times": { "start": parseInt(this.StartTime), "end": parseInt(this.EndTime) }
       }, performScan: this.PerformScan
-    }
+    };
+    return event_data;
+  }
+
+  sentQuery() {
+    const event_data: RequestData = this.collectQuery();
+    event_data.data.times.end = event_data.data.times.end == 175 ? 10000 : event_data.data.times.end;
     this.selectionService.setSelection(event_data);
     this.router.navigate(['result']);
   }
 
-  GoToExplanation() {
+  goToExplanation() {
     this.router.navigate(['explanation']);
   }
 
   updateStartTime(start_time: string) {
-    this.StartTime = start_time
+    this.StartTime = start_time;
+    this.setCookie();
   }
 
   updateEndTime(end_time: string) {
-    this.EndTime = end_time
+    this.EndTime = end_time;
+    this.setCookie();
   }
   updateScanSetting(perform: boolean) {
-    this.PerformScan = perform
+    this.PerformScan = perform;
+    this.setCookie();
   }
 
   updateCTPositions(ct_positions: string[]) {
     this.CTPositions = ct_positions;
+    this.setCookie();
   }
 
   updateTPositions(t_positions: string[]) {
     this.TPositions = t_positions;
+    this.setCookie();
   }
 
   updateMap(map: string) {
-    this.Map = map
+    this.Map = map;
+    this.setCookie();
   }
 
   updateCTAllowed(allowed: string[]) {
     this.CTAllowed = allowed;
+    this.setCookie();
   }
 
   updateCTForbidden(forbidden: string[]) {
     this.CTForbidden = forbidden;
+    this.setCookie();
   }
 
   updateCTType(type: string) {
-    this.CTType = type
+    this.CTType = type;
+    this.setCookie();
   }
 
   updateTAllowed(allowed: string[]) {
     this.TAllowed = allowed;
+    this.setCookie();
   }
 
   updateTForbidden(forbidden: string[]) {
     this.TForbidden = forbidden;
+    this.setCookie();
   }
 
   updateTType(type: string) {
-    this.TType = type
+    this.TType = type;
+    this.setCookie();
   }
 
   updateKillAllowed(allowed: string[]) {
     this.KillAllowed = allowed;
+    this.setCookie();
   }
 
   updateKillType(type: string) {
-    this.KillType = type
+    this.KillType = type;
+    this.setCookie();
   }
 }

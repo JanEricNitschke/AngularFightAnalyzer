@@ -20,7 +20,29 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgChartsModule } from 'ng2-charts';
+import { CookieService } from 'ngx-cookie-service';
+import { ConsentService } from './consent.service';
+import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
 
+const cookieConfig: NgcCookieConsentConfig = {
+  cookie: {
+    domain: 'localhost' // or 'your.domain.com'
+  },
+  "palette": {
+    "popup": {
+      "background": "#461506",
+      "text": "#FF9900",
+      "link": "#ffffff"
+    },
+    "button": {
+      "background": "#461506",
+      "text": "#FF9900",
+      "border": "transparent"
+    }
+  },
+  theme: 'edgeless',
+  type: 'opt-out'
+};
 
 @NgModule({
   declarations: [
@@ -48,8 +70,9 @@ import { NgChartsModule } from 'ng2-charts';
     NgChartsModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
+    NgcCookieConsentModule.forRoot(cookieConfig)
   ],
-  providers: [],
+  providers: [CookieService, ConsentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
