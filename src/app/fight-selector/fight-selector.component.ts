@@ -46,7 +46,9 @@ export class FightSelectorComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.getCookie();
+    if (this.consentService.consentGiven) {
+      this.getCookie();
+    }
   }
 
 
