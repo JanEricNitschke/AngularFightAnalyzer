@@ -41,7 +41,15 @@ const cookieConfig: NgcCookieConsentConfig = {
     }
   },
   theme: 'edgeless',
-  type: 'opt-out'
+  type: 'opt-in',
+  "content": {
+    "message": "I use cookies to store your fight selection. That's it!",
+    "dismiss": "Got it!",
+    "deny": "Refuse cookies",
+    "link": "Learn more",
+    "href": "https://cookiesandyou.com",
+    "policy": "Cookie Policy"
+  }
 };
 
 @NgModule({
