@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { ConsentService } from './consent.service';
 import { NgcCookieConsentService, NgcStatusChangeEvent } from "ngx-cookieconsent";
-import { Observable, of, Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 
 @Component({

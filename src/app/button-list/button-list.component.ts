@@ -48,31 +48,30 @@ export class ButtonListComponent implements OnInit {
   }
 
   setSettings(list_data: string[]) {
-    this.ContentSelected = list_data
-    for (let value of list_data) {
-      this.ContentNotSelected = this.ContentNotSelected.filter(item => item != value);
-    }
+    this.reset()
+    this.ContentSelected = list_data;
+    this.ContentNotSelected = this.ContentNotSelected.filter(item => !list_data.includes(item));
     this.contentCtrl.setValue('');
-    this.submitContent(this.ContentSelected)
+    this.submitContent(this.ContentSelected);
   }
 
   reset() {
     this.getContent()
-    this.ContentSelected = []
+    this.ContentSelected = [];
     this.contentCtrl.setValue('');
-    this.submitContent(this.ContentSelected)
+    this.submitContent(this.ContentSelected);
   }
 
   addElement(content: string): void {
-    this.ContentSelected.push(content)
+    this.ContentSelected.push(content);
     this.ContentNotSelected = this.ContentNotSelected.filter(item => item != content);
-    this.submitContent(this.ContentSelected)
+    this.submitContent(this.ContentSelected);
     this.contentCtrl.setValue('');
   }
   removeElement(content: string): void {
+    this.ContentNotSelected.push(content);
     this.ContentSelected = this.ContentSelected.filter(item => item != content);
-    this.ContentNotSelected.push(content)
-    this.submitContent(this.ContentSelected)
+    this.submitContent(this.ContentSelected);
     this.contentCtrl.setValue('');
   }
 

@@ -1,8 +1,3 @@
-// import 'zone.js';
-// import 'zone.js/dist/async-test.js';
-// import 'zone.js/dist/proxy.js';
-// import 'zone.js/dist/sync-test';
-// import 'zone.js/dist/jasmine-patch';
 import { TestBed } from '@angular/core/testing';
 import { RequestData } from "./request-data"
 
