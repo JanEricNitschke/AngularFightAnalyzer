@@ -72,7 +72,7 @@ class MapSelectorComponentStub {
   @Output() mapEvent = new EventEmitter<string>();
 }
 
-let router = {
+const router = {
   navigate: jasmine.createSpy('navigate')
 }
 

@@ -1,9 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MapsWeaponsService } from '../maps-weapons.service';
 import { ButtonListComponent } from './button-list.component';
-import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';;
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

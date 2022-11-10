@@ -15,10 +15,11 @@ export class ExplanationComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    this.example_map.set("d2mid", ["../../assets/examples/dust2_mid_full.png", "1"]);
-    this.example_map.set("infmid", ["../../assets/examples/inferno_mid_full.png", "2"]);
-    this.example_map.set("mirmid", ["../../assets/examples/mirage_mid_full.png", "3"]);
-    this.example_map.set("infpit", ["../../assets/examples/inferno_pit_full.png", "4"]);
+    const basePath: string = "../../assets/examples/"
+    this.example_map.set("d2mid", [basePath.concat("dust2_mid_full.png"), "1"]);
+    this.example_map.set("infmid", [basePath.concat("inferno_mid_full.png"), "2"]);
+    this.example_map.set("mirmid", [basePath.concat("mirage_mid_full.png"), "3"]);
+    this.example_map.set("infpit", [basePath.concat("inferno_pit_full.png"), "4"]);
     this.example_keys = Array.from(this.example_map.keys());
   }
 
