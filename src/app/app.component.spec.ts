@@ -1,31 +1,79 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ConsentService } from './consent.service';
+import { NgcCookieConsentService, NgcStatusChangeEvent } from "ngx-cookieconsent";
+import { Observable, of, Subject } from 'rxjs';
+
+
+@Component({
+  selector: 'router-outlet',
+  template: ''
+})
+class MockRouterOutlet {
+}
 
 describe('AppComponent', () => {
+  let ConsentServiceStub: Partial<ConsentService>;
+
+  ConsentServiceStub = {
+    consentGiven: false,
+    cookie_name: 'SelectorSettings',
+  };
+  let NgcCookieConsentServiceStub: Partial<NgcCookieConsentService>;
+  let statusChangeSource = new Subject<NgcStatusChangeEvent>();
+  NgcCookieConsentServiceStub = {
+    popupOpen$: of(),
+    popupClose$: of(),
+    initializing$: of(),
+    initialized$: of(),
+    initializationError$: of(),
+    statusChange$: statusChangeSource.asObservable(),
+    revokeChoice$: of(),
+    noCookieLaw$: of(),
+  };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        MockRouterOutlet
       ],
+      providers: [{ provide: ConsentService, useValue: ConsentServiceStub }, { provide: NgcCookieConsentService, useValue: NgcCookieConsentServiceStub }]
     }).compileComponents();
   });
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'angular-fight-analyzer'`, () => {
+  it('should react to event', () => {
     const fixture = TestBed.createComponent(AppComponent);
+    const comp = fixture.componentInstance;
+    fixture.detectChanges();
+    expect(ConsentServiceStub.consentGiven).toBe(false)
+    statusChangeSource.next({ status: "allow", chosenBefore: false })
+    fixture.detectChanges();
+    expect(ConsentServiceStub.consentGiven).toBe(true)
+    fixture.detectChanges();
+    statusChangeSource.next({ status: "dismiss", chosenBefore: false })
+    expect(ConsentServiceStub.consentGiven).toBe(false)
+  });
+
+
+  it(`should have as title 'CS:GO FightAnalyzer'`, () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-fight-analyzer');
+    expect(app.title).toEqual('CS:GO FightAnalyzer');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('angular-fight-analyzer app is running!');
+    expect(compiled.querySelector('h1')?.textContent).toContain('CS:GO FightAnalyzer');
   });
 });

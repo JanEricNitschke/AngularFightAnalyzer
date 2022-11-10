@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ConsentService } from './consent.service';
-import { CookieService } from 'ngx-cookie-service';
 import {
   NgcCookieConsentService,
   NgcNoCookieLawEvent,
@@ -28,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private revokeChoiceSubscription!: Subscription;
   private noCookieLawSubscription!: Subscription;
 
-  constructor(private consentService: ConsentService, private cookieService: CookieService, private ccService: NgcCookieConsentService) { }
+  constructor(private consentService: ConsentService, private ccService: NgcCookieConsentService) { }
 
   ngOnInit(): void {
     // subscribe to cookieconsent observables to react to main events
