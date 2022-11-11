@@ -171,8 +171,9 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   async scanUpperRange(lower: number, upper: number, data: any) {
     const callArray = []
+    const start = lower + 1 + (upper - 1 - lower) % this.step
     this.chartOptions.plugins!.title!.text = "Scan over upper value of time range" //"Lower data of time range"
-    for (let i = lower + 1 + (upper - 1 - lower) % this.step; i < this.maximum + 1; i += this.step) {
+    for (let i = start; i < this.maximum + 1; i += this.step) {
       if (i + this.step > this.maximum) {
         data.times.end = 10000
       }
@@ -182,7 +183,6 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
     }
     forkJoin(callArray).subscribe((responses) => {
-      const start = lower + 1 + (upper - 1 - lower) % this.step
       const offset = start - (start % this.step)
       for (let i = start; i < this.maximum + 1; i += this.step) {
         const index = (i - offset - (upper % this.step)) / this.step
@@ -203,15 +203,15 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   async scanLowerRange(lower: number, upper: number, data: any) {
     const callArray = []
+    const start = this.minimum + (lower - this.minimum) % this.step
     this.chartOptions.plugins!.title!.text = "Scan over lower value of time range" //"Lower data of time range"
-    for (let i = this.minimum + (lower - this.minimum) % this.step; i < upper; i += this.step) {
+    for (let i = start; i < upper; i += this.step) {
       data.times.start = i
       callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
     }
     forkJoin(callArray).subscribe((responses) => {
-      const start = this.minimum + (lower - this.minimum) % this.step
       const offset = start - (start % this.step)
-      for (let i = this.minimum + (lower - this.minimum) % this.step; i < upper; i += this.step) {
+      for (let i = start; i < upper; i += this.step) {
         const index = (i - offset - (lower % this.step)) / this.step
         const body = JSON.parse(responses[index].body)
         this.plotData[index] = body.CT_win_percentage[1]

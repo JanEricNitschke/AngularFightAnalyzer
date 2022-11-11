@@ -26,10 +26,10 @@ export class TimeSelectorComponent implements OnInit {
   }
 
   adjust_end_min(): void {
-    if (this.valueMin <= this.lowerBoundMin) {
+    if (parseInt(this.valueMin) <= parseInt(this.lowerBoundMin)) {
       this.valueMin = this.lowerBoundMin
     }
-    else if (this.valueMin > this.upperBoundMin) {
+    else if (parseInt(this.valueMin) > parseInt(this.upperBoundMin)) {
       this.valueMin = this.upperBoundMin
     }
     this.lowerBoundMax = (parseInt(this.valueMin) + 1).toString()
@@ -37,10 +37,10 @@ export class TimeSelectorComponent implements OnInit {
   }
 
   adjust_start_max(): void {
-    if (this.valueMax <= this.lowerBoundMax) {
+    if (parseInt(this.valueMax) <= parseInt(this.lowerBoundMax)) {
       this.valueMax = this.lowerBoundMax
     }
-    else if (this.valueMax > this.upperBoundMax) {
+    else if (parseInt(this.valueMax) > parseInt(this.upperBoundMax)) {
       this.valueMax = this.upperBoundMax
     }
     this.upperBoundMin = (parseInt(this.valueMax) - 1).toString()
@@ -48,12 +48,12 @@ export class TimeSelectorComponent implements OnInit {
   }
 
   reset() {
-    this.lowerBoundMin = '0'
-    this.upperBoundMin = '174'
     this.valueMin = '0'
-    this.lowerBoundMax = '1'
-    this.upperBoundMax = '175'
+    this.lowerBoundMin = this.valueMin
+    this.lowerBoundMax = (parseInt(this.valueMin) + 1).toString()
     this.valueMax = '175'
+    this.upperBoundMax = this.valueMax
+    this.upperBoundMin = (parseInt(this.valueMax) - 1).toString()
     this.performScan = true
     this.startEvent.emit(this.valueMin);
     this.endEvent.emit(this.valueMax);

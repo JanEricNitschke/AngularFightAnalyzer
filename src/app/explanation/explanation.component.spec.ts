@@ -36,7 +36,7 @@ describe('ExplanationComponent', () => {
     expect(component.example_map.get(component.selectedExample)![0].startsWith("../../assets/examples/")).toBe(true)
   });
 
-  it('go to selector', () => {
+  it('should go to selector', () => {
     component.GoToSelector()
     expect(router.navigate).toHaveBeenCalledWith(["selector"])
   });

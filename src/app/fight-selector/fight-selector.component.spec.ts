@@ -79,7 +79,7 @@ const router = {
 let SelectionServiceStub: Partial<SelectionService>;
 
 SelectionServiceStub = {
-  setSelection(selection: RequestData) { return selection.data.times.end }
+  setSelection(selection: RequestData) { }
 };
 
 describe('FightSelectorComponent', () => {
