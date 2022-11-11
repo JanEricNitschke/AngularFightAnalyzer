@@ -1,5 +1,14 @@
 # AngularFightAnalyzer
 
+A web app for analyzing which side has the advantage in Counter-Strike: Global Offensive (CSGO) engagements.
+Allows filtering engagements by map, player positions, weapons and time.
+Returns the average CT win percentage together with its uncertainties.
+It is possible so scan over time ranges. In that case the win percentage is plottet over the specified range.
+The selection is stored and automatically reloaded via cookies.
+The application offers an introduction view with examples clarifiying the apps purpose and how to use it.
+An AWS lambda function alongside a RDS MySQL database form the backend for the application.
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
 ## Development server
