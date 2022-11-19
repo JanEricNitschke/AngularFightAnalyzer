@@ -1,0 +1,14 @@
+.impressum {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.homelink {
+    text-decoration: none;
+}
+
+a {
+    color: #FF9900
+}

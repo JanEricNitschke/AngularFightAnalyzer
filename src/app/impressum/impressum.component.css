@@ -1,0 +1,22 @@
+.impressum_head {
+    float: left;
+    clear: both;
+    text-align: left;
+}
+
+.impressum_content {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    color: #FF9900;
+}
+
+p {
+    color: #f9f9f9;
+}
+
+a {
+    color: #FF9900
+}

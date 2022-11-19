@@ -23,6 +23,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { CookieService } from 'ngx-cookie-service';
 import { ConsentService } from './consent.service';
 import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
+import { ImpressumComponent } from './impressum/impressum.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -62,7 +63,8 @@ const cookieConfig: NgcCookieConsentConfig = {
     TimeSelectorComponent,
     ButtonListComponent,
     InformationDisplayComponent,
-    ExplanationComponent
+    ExplanationComponent,
+    ImpressumComponent
   ],
   imports: [
     BrowserModule,
