@@ -42,7 +42,6 @@ export class FightSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.cookie_name = this.consentService.cookie_name
-    // this.getCookie();
   }
 
   ngAfterViewInit(): void {
@@ -51,12 +50,8 @@ export class FightSelectorComponent implements OnInit {
     }
   }
 
-
-  setCookie() {
-    if (this.consentService.consentGiven) {
-      const settings_data = this.collectQuery();
-      this.cookieService.set(this.cookie_name, JSON.stringify(settings_data), { expires: 365, path: "/", secure: true, sameSite: "Lax" });
-    }
+  isRequestData(obj: any): obj is RequestData {
+    return ((obj.performScan !== undefined) && (obj.data !== undefined));
   }
 
   setSettings(settings_data: RequestData) {
@@ -65,8 +60,11 @@ export class FightSelectorComponent implements OnInit {
     this.TimeComponent.setSettings(settings_data);
   }
 
-  isRequestData(obj: any): obj is RequestData {
-    return ((obj.performScan !== undefined) && (obj.data !== undefined));
+  setCookie() {
+    if (this.consentService.consentGiven) {
+      const settings_data = this.collectQuery();
+      this.cookieService.set(this.cookie_name, JSON.stringify(settings_data), { expires: 365, path: "/", secure: true, sameSite: "Lax" });
+    }
   }
 
   getCookie() {

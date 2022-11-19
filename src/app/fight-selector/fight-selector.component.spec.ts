@@ -3,13 +3,12 @@ import { Component, Output, EventEmitter, } from '@angular/core';
 import { FightSelectorComponent } from './fight-selector.component';
 import { Router } from '@angular/router';
 import { ConsentService } from '../consent.service';
-import { NgcCookieConsentService, NgcStatusChangeEvent } from "ngx-cookieconsent";
-import { of, Subject } from 'rxjs';
 import { SelectionService } from '../selection.service';
 import { MapSelectorComponent } from '../map-selector/map-selector.component';;
 import { TimeSelectorComponent } from '../time-selector/time-selector.component';
 import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.component';
 import { RequestData } from "../request-data"
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'router-outlet',
@@ -82,6 +81,15 @@ SelectionServiceStub = {
   setSelection(selection: RequestData) { }
 };
 
+let CookieServiceStub: Partial<CookieService>;
+
+CookieServiceStub = {
+  set(name: string, value: string, options?: any) { },
+  check(name: string): boolean { return true },
+  get(name: string): string { return "" },
+  delete(name: string) { }
+};
+
 describe('FightSelectorComponent', () => {
   let component: FightSelectorComponent;
   let fixture: ComponentFixture<FightSelectorComponent>;
@@ -91,23 +99,16 @@ describe('FightSelectorComponent', () => {
     consentGiven: false,
     cookie_name: 'SelectorSettings',
   };
-  let NgcCookieConsentServiceStub: Partial<NgcCookieConsentService>;
-  let statusChangeSource = new Subject<NgcStatusChangeEvent>();
-  NgcCookieConsentServiceStub = {
-    popupOpen$: of(),
-    popupClose$: of(),
-    initializing$: of(),
-    initialized$: of(),
-    initializationError$: of(),
-    statusChange$: statusChangeSource.asObservable(),
-    revokeChoice$: of(),
-    noCookieLaw$: of(),
-  };
+
 
   beforeEach(async () => {
+    ConsentServiceStub = {
+      consentGiven: false,
+      cookie_name: 'SelectorSettings',
+    };
     await TestBed.configureTestingModule({
       declarations: [FightSelectorComponent, MockRouterOutlet, WeaponSelectorComponent, MapSelectorComponent, TimeSelectorComponent],
-      providers: [{ provide: Router, useValue: router }, { provide: ConsentService, useValue: ConsentServiceStub }, { provide: NgcCookieConsentService, useValue: NgcCookieConsentServiceStub }, { provide: SelectionService, useValue: SelectionServiceStub }]
+      providers: [{ provide: Router, useValue: router }, { provide: CookieService, useValue: CookieServiceStub }, { provide: ConsentService, useValue: ConsentServiceStub }, { provide: SelectionService, useValue: SelectionServiceStub }]
     })
       .compileComponents();
 
@@ -123,6 +124,78 @@ describe('FightSelectorComponent', () => {
     expect(component.cookie_name).toBe("");
     fixture.detectChanges();
     expect(component.cookie_name).toBe('SelectorSettings');
+  });
+
+
+  it('should afterviewinit', () => {
+    spyOn(component, "getCookie")
+    component.ngAfterViewInit()
+    expect(component.getCookie).not.toHaveBeenCalled()
+    ConsentServiceStub.consentGiven = true
+    component.ngAfterViewInit()
+    expect(component.getCookie).toHaveBeenCalled()
+  });
+
+  it('should determine request data', () => {
+    const requestobj = { performScan: true, data: { A: false } }
+    expect(component.isRequestData(requestobj)).toBeTrue()
+    const no_requestobj1 = { performScan: true }
+    const no_requestobj2 = { data: { A: false } }
+    const no_requestobj3 = { test: { A: false } }
+    expect(component.isRequestData(no_requestobj1)).toBeFalse()
+    expect(component.isRequestData(no_requestobj2)).toBeFalse()
+    expect(component.isRequestData(no_requestobj3)).toBeFalse()
+  });
+
+  it('should setcookie', () => {
+    spyOn(component, "collectQuery")
+    spyOn(CookieServiceStub, "set" as never)
+    component.setCookie()
+    expect(component.collectQuery).not.toHaveBeenCalled()
+    expect(CookieServiceStub.set).not.toHaveBeenCalled()
+    ConsentServiceStub.consentGiven = true
+    component.setCookie()
+    expect(component.collectQuery).toHaveBeenCalled()
+    expect(CookieServiceStub.set).toHaveBeenCalled()
+  });
+
+  it('should getcookie', () => {
+    let cookiespy = spyOn<any>(CookieServiceStub, "check").and.callFake(function () {
+      return true;
+    });
+    spyOn(JSON, "parse")
+    let requestspy = spyOn(component, 'isRequestData').and.callFake(function (obj: any): obj is RequestData {
+      return true;
+    });
+    spyOn(component, "setSettings")
+    component.getCookie()
+    expect(CookieServiceStub.check).toHaveBeenCalledTimes(1)
+    expect(JSON.parse).toHaveBeenCalledTimes(1)
+    expect(component.isRequestData).toHaveBeenCalledTimes(1)
+    expect(component.setSettings).toHaveBeenCalledTimes(1)
+    requestspy.and.callFake(function (obj: any): obj is RequestData {
+      return false;
+    });
+    component.getCookie()
+    expect(CookieServiceStub.check).toHaveBeenCalledTimes(2)
+    expect(JSON.parse).toHaveBeenCalledTimes(2)
+    expect(component.isRequestData).toHaveBeenCalledTimes(2)
+    expect(component.setSettings).toHaveBeenCalledTimes(1)
+    cookiespy.and.callFake(function () {
+      return false;
+    });
+    component.getCookie()
+    expect(CookieServiceStub.check).toHaveBeenCalledTimes(3)
+    expect(JSON.parse).toHaveBeenCalledTimes(2)
+    expect(component.isRequestData).toHaveBeenCalledTimes(2)
+    expect(component.setSettings).toHaveBeenCalledTimes(1)
+  });
+
+  it('should deletecookie', () => {
+    fixture.detectChanges();
+    spyOn(CookieServiceStub, "delete" as never)
+    component.deleteCookie()
+    expect(CookieServiceStub.delete).toHaveBeenCalledWith(ConsentServiceStub.cookie_name)
   });
 
   it('setSettings should call children', () => {
