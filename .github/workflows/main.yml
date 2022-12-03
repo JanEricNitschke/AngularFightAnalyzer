@@ -1,4 +1,6 @@
-name: CI Angular app through GitHub Actions
+# Running build and test for angular-fight-analyzer
+
+name: build
 on: push
 jobs:
   build:
