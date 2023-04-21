@@ -27,7 +27,7 @@ import { ImpressumComponent } from './impressum/impressum.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
-    domain: 'localhost' // or 'your.domain.com'
+    domain: 'main.d225v44fsxss8s.amplifyapp.com' // or 'your.domain.com'
   },
   "palette": {
     "popup": {
