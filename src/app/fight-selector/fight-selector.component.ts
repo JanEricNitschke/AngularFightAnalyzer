@@ -1,4 +1,11 @@
-import { Component, OnInit, ViewChildren, ViewChild, QueryList } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChildren,
+  ViewChild,
+  QueryList,
+  AfterViewInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { MapSelectorComponent } from '../map-selector/map-selector.component';
 import { SelectionService } from '../selection.service';
@@ -6,15 +13,14 @@ import { ConsentService } from '../consent.service';
 import { TimeSelectorComponent } from '../time-selector/time-selector.component';
 import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.component';
 import { CookieService } from 'ngx-cookie-service';
-import { RequestData } from "../request-data"
+import { RequestData } from '../request-data';
 
 @Component({
   selector: 'app-fight-selector',
   templateUrl: './fight-selector.component.html',
-  styleUrls: ['./fight-selector.component.css']
+  styleUrls: ['./fight-selector.component.css'],
 })
-export class FightSelectorComponent implements OnInit {
-
+export class FightSelectorComponent implements OnInit, AfterViewInit {
   cookie_name: string = '';
   Map: string = 'de_dust2';
   CTPositions: string[] = [];
@@ -32,16 +38,21 @@ export class FightSelectorComponent implements OnInit {
   PerformScan: boolean = true;
 
   @ViewChildren(WeaponSelectorComponent)
-  WeaponsChildren: QueryList<WeaponSelectorComponent>
+  WeaponsChildren: QueryList<WeaponSelectorComponent>;
   @ViewChild(MapSelectorComponent)
   MapComponent!: MapSelectorComponent;
   @ViewChild(TimeSelectorComponent)
   TimeComponent!: TimeSelectorComponent;
 
-  constructor(private router: Router, private selectionService: SelectionService, private cookieService: CookieService, private consentService: ConsentService) { }
+  constructor(
+    private router: Router,
+    private selectionService: SelectionService,
+    private cookieService: CookieService,
+    private consentService: ConsentService,
+  ) {}
 
   ngOnInit(): void {
-    this.cookie_name = this.consentService.cookie_name
+    this.cookie_name = this.consentService.cookie_name;
   }
 
   ngAfterViewInit(): void {
@@ -51,11 +62,11 @@ export class FightSelectorComponent implements OnInit {
   }
 
   isRequestData(obj: any): obj is RequestData {
-    return ((obj.performScan !== undefined) && (obj.data !== undefined));
+    return obj.performScan !== undefined && obj.data !== undefined;
   }
 
   setSettings(settings_data: RequestData) {
-    this.WeaponsChildren.forEach(c => c.setSettings(settings_data));
+    this.WeaponsChildren.forEach((c) => c.setSettings(settings_data));
     this.MapComponent.setSettings(settings_data);
     this.TimeComponent.setSettings(settings_data);
   }
@@ -63,7 +74,12 @@ export class FightSelectorComponent implements OnInit {
   setCookie() {
     if (this.consentService.consentGiven) {
       const settings_data = this.collectQuery();
-      this.cookieService.set(this.cookie_name, JSON.stringify(settings_data), { expires: 365, path: "/", secure: true, sameSite: "Lax" });
+      this.cookieService.set(this.cookie_name, JSON.stringify(settings_data), {
+        expires: 365,
+        path: '/',
+        secure: true,
+        sameSite: 'Lax',
+      });
     }
   }
 
@@ -82,36 +98,55 @@ export class FightSelectorComponent implements OnInit {
   }
 
   resetAll() {
-    if (confirm("Are you sure you want to reset your current selection?")) {
-      this.WeaponsChildren.forEach(c => c.reset());
+    if (confirm('Are you sure you want to reset your current selection?')) {
+      this.WeaponsChildren.forEach((c) => c.reset());
       this.MapComponent.reset();
       this.TimeComponent.reset();
     }
   }
 
   collectQuery(): RequestData {
-    const event_data = {
+    return {
       data: {
-        "map_name": this.Map,
-        "weapons": {
-          "Kill": this.KillType == "Weapons" ? this.KillAllowed : [], "T": this.TType == "Weapons" ? { "Allowed": this.TAllowed, "Forbidden": this.TForbidden } : { "Allowed": [], "Forbidden": [] },
-          "CT": this.CTType == "Weapons" ? { "Allowed": this.CTAllowed, "Forbidden": this.CTForbidden } : { "Allowed": [], "Forbidden": [] }
+        map_name: this.Map,
+        weapons: {
+          Kill: this.KillType == 'Weapons' ? this.KillAllowed : [],
+          T:
+            this.TType == 'Weapons'
+              ? { Allowed: this.TAllowed, Forbidden: this.TForbidden }
+              : { Allowed: [], Forbidden: [] },
+          CT:
+            this.CTType == 'Weapons'
+              ? { Allowed: this.CTAllowed, Forbidden: this.CTForbidden }
+              : { Allowed: [], Forbidden: [] },
         },
-        "classes": {
-          "Kill": this.KillType == "Classes" ? this.KillAllowed : [], "T": this.TType == "Classes" ? { "Allowed": this.TAllowed, "Forbidden": this.TForbidden } : { "Allowed": [], "Forbidden": [] },
-          "CT": this.CTType == "Classes" ? { "Allowed": this.CTAllowed, "Forbidden": this.CTForbidden } : { "Allowed": [], "Forbidden": [] }
+        classes: {
+          Kill: this.KillType == 'Classes' ? this.KillAllowed : [],
+          T:
+            this.TType == 'Classes'
+              ? { Allowed: this.TAllowed, Forbidden: this.TForbidden }
+              : { Allowed: [], Forbidden: [] },
+          CT:
+            this.CTType == 'Classes'
+              ? { Allowed: this.CTAllowed, Forbidden: this.CTForbidden }
+              : { Allowed: [], Forbidden: [] },
         },
-        "positions": { "CT": this.CTPositions, "T": this.TPositions },
-        "use_weapons_classes": { "CT": this.CTType.toLowerCase(), "T": this.TType.toLowerCase(), "Kill": this.KillType.toLowerCase() },
-        "times": { "start": parseInt(this.StartTime), "end": parseInt(this.EndTime) }
-      }, performScan: this.PerformScan
+        positions: { CT: this.CTPositions, T: this.TPositions },
+        use_weapons_classes: {
+          CT: this.CTType.toLowerCase(),
+          T: this.TType.toLowerCase(),
+          Kill: this.KillType.toLowerCase(),
+        },
+        times: { start: parseInt(this.StartTime), end: parseInt(this.EndTime) },
+      },
+      performScan: this.PerformScan,
     };
-    return event_data;
   }
 
   sentQuery() {
     const event_data: RequestData = this.collectQuery();
-    event_data.data.times.end = event_data.data.times.end == 175 ? 10000 : event_data.data.times.end;
+    event_data.data.times.end =
+      event_data.data.times.end == 175 ? 10000 : event_data.data.times.end;
     this.selectionService.setSelection(event_data);
     this.router.navigate(['result']);
   }

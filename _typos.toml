@@ -1,0 +1,9 @@
+[default.extend-words]
+# Don't correct the test value BA
+BA = "BA"
+
+[default]
+extend-ignore-identifiers-re = [
+    # Don't correct the Five-SeveN
+    ".*SeveN.*"
+]

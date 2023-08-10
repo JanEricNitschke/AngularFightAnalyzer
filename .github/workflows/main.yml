@@ -13,10 +13,18 @@ jobs:
         with:
           node-version: 14.x
 
+      # - name: Prettier
+      #   uses: actionsx/prettier@v2
+      #   with:
+      #     # prettier CLI arguments.
+      #     args: --check "./tictactoe_javascript/**.{css,js}"
+
       - name: Setup
         run: npm ci
       - name: Build
         run: npm build
+      - name: Lint
+        run: npm run lint
       - name: Test
         run: |
           npm test -- --no-watch --no-progress --browsers=ChromeHeadlessCI --code-coverage

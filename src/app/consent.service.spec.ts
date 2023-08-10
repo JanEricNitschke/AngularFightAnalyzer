@@ -20,8 +20,8 @@ describe('ConsentService', () => {
     expect(service.cookie_name).toBe('SelectorSettings');
   });
   it('settings should be modified', () => {
-    service.consentGiven = true
-    service.cookie_name = "test"
+    service.consentGiven = true;
+    service.cookie_name = 'test';
     expect(service.consentGiven).toBe(true);
     expect(service.cookie_name).toBe('test');
   });

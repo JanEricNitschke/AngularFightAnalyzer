@@ -11,46 +11,49 @@ import { ButtonListComponent } from './button-list/button-list.component';
 import { InformationDisplayComponent } from './information-display/information-display.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input'
+import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplanationComponent } from './explanation/explanation.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle'
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgChartsModule } from 'ng2-charts';
 import { CookieService } from 'ngx-cookie-service';
 import { ConsentService } from './consent.service';
-import { NgcCookieConsentModule, NgcCookieConsentConfig } from 'ngx-cookieconsent';
+import {
+  NgcCookieConsentModule,
+  NgcCookieConsentConfig,
+} from 'ngx-cookieconsent';
 import { ImpressumComponent } from './impressum/impressum.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
-    domain: 'main.d225v44fsxss8s.amplifyapp.com' // or 'your.domain.com'
+    domain: 'main.d225v44fsxss8s.amplifyapp.com', // or 'your.domain.com'
   },
-  "palette": {
-    "popup": {
-      "background": "#461506",
-      "text": "#FF9900",
-      "link": "#ffffff"
+  palette: {
+    popup: {
+      background: '#461506',
+      text: '#FF9900',
+      link: '#ffffff',
     },
-    "button": {
-      "background": "#461506",
-      "text": "#FF9900",
-      "border": "transparent"
-    }
+    button: {
+      background: '#461506',
+      text: '#FF9900',
+      border: 'transparent',
+    },
   },
   theme: 'edgeless',
   type: 'opt-in',
-  "content": {
-    "message": "I use cookies to store your fight selection. That's it!",
-    "dismiss": "Got it!",
-    "deny": "Refuse cookies",
-    "link": "Learn more",
-    "href": "https://cookiesandyou.com",
-    "policy": "Cookie Policy"
-  }
+  content: {
+    message: "I use cookies to store your fight selection. That's it!",
+    dismiss: 'Got it!',
+    deny: 'Refuse cookies',
+    link: 'Learn more',
+    href: 'https://cookiesandyou.com',
+    policy: 'Cookie Policy',
+  },
 };
 
 @NgModule({
@@ -64,7 +67,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     ButtonListComponent,
     InformationDisplayComponent,
     ExplanationComponent,
-    ImpressumComponent
+    ImpressumComponent,
   ],
   imports: [
     BrowserModule,
@@ -80,9 +83,9 @@ const cookieConfig: NgcCookieConsentConfig = {
     NgChartsModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
-    NgcCookieConsentModule.forRoot(cookieConfig)
+    NgcCookieConsentModule.forRoot(cookieConfig),
   ],
   providers: [CookieService, ConsentService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

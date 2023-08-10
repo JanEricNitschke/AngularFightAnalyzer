@@ -2,10 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ExplanationComponent } from './explanation.component';
 
-
 const router = {
-  navigate: jasmine.createSpy('navigate')
-}
+  navigate: jasmine.createSpy('navigate'),
+};
 
 describe('ExplanationComponent', () => {
   let component: ExplanationComponent;
@@ -14,9 +13,8 @@ describe('ExplanationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ExplanationComponent],
-      providers: [{ provide: Router, useValue: router }]
-    })
-      .compileComponents();
+      providers: [{ provide: Router, useValue: router }],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ExplanationComponent);
     component = fixture.componentInstance;
@@ -28,16 +26,24 @@ describe('ExplanationComponent', () => {
   });
 
   it('should init', () => {
-    expect(component.example_map).toEqual(new Map<string, string[]>())
+    expect(component.example_map).toEqual(new Map<string, string[]>());
     fixture.detectChanges();
-    component.selectedExample = "d2mid"
-    expect(component.example_map.get(component.selectedExample)![0].endsWith("dust2_mid_full.png")).toBe(true)
-    component.selectedExample = "infmid"
-    expect(component.example_map.get(component.selectedExample)![0].startsWith("../../assets/examples/")).toBe(true)
+    component.selectedExample = 'd2mid';
+    expect(
+      component.example_map
+        .get(component.selectedExample)![0]
+        .endsWith('dust2_mid_full.png'),
+    ).toBe(true);
+    component.selectedExample = 'infmid';
+    expect(
+      component.example_map
+        .get(component.selectedExample)![0]
+        .startsWith('../../assets/examples/'),
+    ).toBe(true);
   });
 
   it('should go to selector', () => {
-    component.GoToSelector()
-    expect(router.navigate).toHaveBeenCalledWith(["selector"])
+    component.GoToSelector();
+    expect(router.navigate).toHaveBeenCalledWith(['selector']);
   });
 });

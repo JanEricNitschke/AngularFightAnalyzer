@@ -1,54 +1,54 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { RequestData } from "./request-data"
+import { RequestData } from './request-data';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SelectionService {
   private selection$ = new BehaviorSubject<RequestData>({
-    data:
-    {
-      "map_name": '',
-      "weapons": {
-        "Kill": [],
-        "CT": {
-          "Allowed": [],
-          "Forbidden": []
+    data: {
+      map_name: '',
+      weapons: {
+        Kill: [],
+        CT: {
+          Allowed: [],
+          Forbidden: [],
         },
-        "T": {
-          "Allowed": [],
-          "Forbidden": []
-        }
-      },
-      "classes": {
-        "Kill": [],
-        "CT": {
-          "Allowed": [],
-          "Forbidden": []
+        T: {
+          Allowed: [],
+          Forbidden: [],
         },
-        "T": {
-          "Allowed": [],
-          "Forbidden": []
-        }
       },
-      "positions": {
-        "CT": [],
-        "T": []
+      classes: {
+        Kill: [],
+        CT: {
+          Allowed: [],
+          Forbidden: [],
+        },
+        T: {
+          Allowed: [],
+          Forbidden: [],
+        },
       },
-      "use_weapons_classes": {
-        "CT": "weapons",
-        "Kill": "weapons",
-        "T": "weapons"
+      positions: {
+        CT: [],
+        T: [],
       },
-      "times": {
-        "start": 0,
-        "end": 175
-      }
-    }, performScan: true
+      use_weapons_classes: {
+        CT: 'weapons',
+        Kill: 'weapons',
+        T: 'weapons',
+      },
+      times: {
+        start: 0,
+        end: 175,
+      },
+    },
+    performScan: true,
   });
   selectionObservable$ = this.selection$.asObservable();
-  constructor() { }
+  constructor() {}
 
   setSelection(selection: RequestData) {
     this.selection$.next(selection);

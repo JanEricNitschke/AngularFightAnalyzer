@@ -12,7 +12,7 @@
             (ForbiddenEvent)="updateCTForbidden($event)" (TypeEvent)="updateCTType($event)"></app-weapon-selector>
         <app-weapon-selector Name="T" (AllowedEvent)="updateTAllowed($event)"
             (ForbiddenEvent)="updateTForbidden($event)" (TypeEvent)="updateTType($event)"></app-weapon-selector>
-        <app-time-selector (startEvent)="updateStartTime($event)" (endEvent)="updateEndTime($event)"
+        <app-time-selector (startEvent)="updateStartTime($event)" (endingEvent)="updateEndTime($event)"
             (scanEvent)="updateScanSetting($event)">
         </app-time-selector>
         <button type="button" (click)="resetAll()">Reset</button>

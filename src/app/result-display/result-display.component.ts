@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionService } from '../selection.service';
-import { Result } from "../result"
+import { Result } from '../result';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription, forkJoin } from 'rxjs';
 import { ChartDataset, ChartOptions } from 'chart.js';
@@ -10,21 +10,21 @@ import { BaseChartDirective } from 'ng2-charts';
 @Component({
   selector: 'app-result-display',
   templateUrl: './result-display.component.html',
-  styleUrls: ['./result-display.component.css']
+  styleUrls: ['./result-display.component.css'],
 })
 export class ResultDisplayComponent implements OnInit, OnDestroy {
   ResponseBody: Result = {
     Situations_found: 0,
     CT_win_percentage: [0, 0, 0],
-    sql: ''
+    sql: '',
   };
-  loading: boolean = false
-  timerInnerHTML: string = ''
+  loading: boolean = false;
+  timerInnerHTML: string = '';
   ResponseStatusCode: number = 0;
   Request: any;
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
   _selectionServiceSubscription: Subscription;
 
@@ -72,7 +72,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       borderWidth: 1,
       pointHitRadius: 0,
       tension: 0.3, // makes line more squiggly
-    }
+    },
   ];
   chartLabels: number[] = this.plotLabels;
   chartOptions: ChartOptions = {
@@ -82,7 +82,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     scales: {
       xAxis: {
         title: {
-          text: "Scanned value",
+          text: 'Scanned value',
           display: true,
           color: '#FF9900',
         },
@@ -100,18 +100,18 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
     plugins: {
       title: {
-        text: "Time range scan",
+        text: 'Time range scan',
         color: '#FF9900',
         display: true,
         font: {
           size: 20,
-        }
+        },
       },
       legend: {
-        display: false
+        display: false,
       },
       tooltip: {
-        filter: tooltipItem => tooltipItem.datasetIndex == 0,
+        filter: (tooltipItem) => tooltipItem.datasetIndex == 0,
         // ⤵️ tooltip main styles
         backgroundColor: 'white',
         displayColors: false,
@@ -120,112 +120,131 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
         // ⤵️ title
         titleColor: '#FF9900',
         titleFont: {
-          size: 18
+          size: 18,
         },
 
         // ⤵️ body
         bodyColor: '#FF9900',
         bodyFont: {
-          size: 13
-        }
-      }
-    }
+          size: 13,
+        },
+      },
+    },
   };
 
-  constructor(private http: HttpClient, private router: Router, private selectionService: SelectionService) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private selectionService: SelectionService,
+  ) {}
 
   ngOnInit(): void {
-    this._selectionServiceSubscription = this.selectionService.selectionObservable$.subscribe((value) => {
-      let data = value.data
-      if (data.map_name == '') {
-        this.ResponseStatusCode = -17
-        return
-      }
-      const date = new Date();
-      this.displayLoading(date)
-      this.Request = JSON.parse(JSON.stringify(data))
-      if (value.performScan) {
-        this.showCanvas = true
-        const lower = data.times.start
-        const upper = data.times.end < 175 ? data.times.end : 175
-        if ((lower > 175 - upper)) {
-          this.scanLowerRange(lower, upper, data)
+    this._selectionServiceSubscription =
+      this.selectionService.selectionObservable$.subscribe((value) => {
+        let data = value.data;
+        if (data.map_name == '') {
+          this.ResponseStatusCode = -17;
+          return;
         }
-        else {
-          this.scanUpperRange(lower, upper, data)
+        const date = new Date();
+        this.displayLoading(date);
+        this.Request = JSON.parse(JSON.stringify(data));
+        if (value.performScan) {
+          this.showCanvas = true;
+          const lower = data.times.start;
+          const upper = data.times.end < 175 ? data.times.end : 175;
+          if (lower > 175 - upper) {
+            this.scanLowerRange(lower, upper, data);
+          } else {
+            this.scanUpperRange(lower, upper, data);
+          }
+        } else {
+          this.call_API(
+            'https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev',
+            data,
+          ).subscribe((data) => {
+            this.ResponseBody = JSON.parse(data.body);
+            this.ResponseStatusCode = data.statusCode;
+            this.hideLoading();
+          });
         }
-      }
-      else {
-        this.call_API("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", data).subscribe(data => {
-          this.ResponseBody = JSON.parse(data.body);
-          this.ResponseStatusCode = data.statusCode;
-          this.hideLoading()
-        })
-      }
-    });
+      });
   }
 
   ngOnDestroy() {
-    this._selectionServiceSubscription.unsubscribe()
+    this._selectionServiceSubscription.unsubscribe();
   }
 
   async scanUpperRange(lower: number, upper: number, data: any) {
-    const callArray = []
-    const start = lower + 1 + (upper - 1 - lower) % this.step
-    this.chartOptions.plugins!.title!.text = "Scan over upper value of time range" //"Lower data of time range"
+    const callArray = [];
+    const start = lower + 1 + ((upper - 1 - lower) % this.step);
+    this.chartOptions.plugins!.title!.text =
+      'Scan over upper value of time range'; //"Lower data of time range"
     for (let i = start; i < this.maximum + 1; i += this.step) {
       if (i + this.step > this.maximum) {
-        data.times.end = 10000
+        data.times.end = 10000;
+      } else {
+        data.times.end = i;
       }
-      else {
-        data.times.end = i
-      }
-      callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
+      callArray.push(
+        this.http.post<any>(
+          'https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev',
+          JSON.parse(JSON.stringify(data)),
+          this.httpOptions,
+        ),
+      );
     }
     forkJoin(callArray).subscribe((responses) => {
-      const offset = start - (start % this.step)
+      const offset = start - (start % this.step);
       for (let i = start; i < this.maximum + 1; i += this.step) {
-        const index = (i - offset - (upper % this.step)) / this.step
-        const body = JSON.parse(responses[index].body)
-        this.plotData[index] = body.CT_win_percentage[1]
-        this.plotLower[index] = body.CT_win_percentage[0]
-        this.plotUpper[index] = body.CT_win_percentage[2]
-        this.plotLabels[index] = i
+        const index = (i - offset - (upper % this.step)) / this.step;
+        const body = JSON.parse(responses[index].body);
+        this.plotData[index] = body.CT_win_percentage[1];
+        this.plotLower[index] = body.CT_win_percentage[0];
+        this.plotUpper[index] = body.CT_win_percentage[2];
+        this.plotLabels[index] = i;
         if (i == upper) {
           this.ResponseBody = body;
           this.ResponseStatusCode = responses[index].statusCode;
         }
       }
-      this.hideLoading()
-      this.updateChart()
-    })
+      this.hideLoading();
+      this.updateChart();
+    });
   }
 
   async scanLowerRange(lower: number, upper: number, data: any) {
-    const callArray = []
-    const start = this.minimum + (lower - this.minimum) % this.step
-    this.chartOptions.plugins!.title!.text = "Scan over lower value of time range" //"Lower data of time range"
+    const callArray = [];
+    const start = this.minimum + ((lower - this.minimum) % this.step);
+    this.chartOptions.plugins!.title!.text =
+      'Scan over lower value of time range'; //"Lower data of time range"
     for (let i = start; i < upper; i += this.step) {
-      data.times.start = i
-      callArray.push(this.http.post<any>("https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev", JSON.parse(JSON.stringify(data)), this.httpOptions))
+      data.times.start = i;
+      callArray.push(
+        this.http.post<any>(
+          'https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev',
+          JSON.parse(JSON.stringify(data)),
+          this.httpOptions,
+        ),
+      );
     }
     forkJoin(callArray).subscribe((responses) => {
-      const offset = start - (start % this.step)
+      const offset = start - (start % this.step);
       for (let i = start; i < upper; i += this.step) {
-        const index = (i - offset - (lower % this.step)) / this.step
-        const body = JSON.parse(responses[index].body)
-        this.plotData[index] = body.CT_win_percentage[1]
-        this.plotLower[index] = body.CT_win_percentage[0]
-        this.plotUpper[index] = body.CT_win_percentage[2]
-        this.plotLabels[index] = i
+        const index = (i - offset - (lower % this.step)) / this.step;
+        const body = JSON.parse(responses[index].body);
+        this.plotData[index] = body.CT_win_percentage[1];
+        this.plotLower[index] = body.CT_win_percentage[0];
+        this.plotUpper[index] = body.CT_win_percentage[2];
+        this.plotLabels[index] = i;
         if (i == lower) {
           this.ResponseBody = body;
           this.ResponseStatusCode = responses[index].statusCode;
         }
       }
-      this.hideLoading()
-      this.updateChart()
-    })
+      this.hideLoading();
+      this.updateChart();
+    });
   }
 
   private updateChart() {
@@ -233,8 +252,8 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   }
 
   displayLoading(date: Date) {
-    this.loading = true
-    this.updateTime(date)
+    this.loading = true;
+    this.updateTime(date);
   }
 
   updateTime(oldDate: Date) {
@@ -256,14 +275,14 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     seconds = Math.floor(seconds % 60);
 
     // 5 - Format so it shows a leading zero if needed
-    const minutesStr = ("00" + minutes).slice(-2);
-    const secondsStr = ("00" + seconds).slice(-2);
-    return minutesStr + "m:" + secondsStr + "s"
+    const minutesStr = ('00' + minutes).slice(-2);
+    const secondsStr = ('00' + seconds).slice(-2);
+    return minutesStr + 'm:' + secondsStr + 's';
   }
 
   // hiding loading
   hideLoading() {
-    this.loading = false
+    this.loading = false;
   }
 
   GoToSelector() {
@@ -275,6 +294,6 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   }
 
   call_API(url: string, raw: any) {
-    return this.http.post<any>(url, raw, this.httpOptions)
+    return this.http.post<any>(url, raw, this.httpOptions);
   }
 }

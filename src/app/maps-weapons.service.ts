@@ -3,14 +3,12 @@ import { contentsmap } from './button-list-contents';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MapsWeaponsService {
-
-  constructor() { }
+  constructor() {}
 
   getList(identifier: string): Observable<string[]> {
-    const list = of(contentsmap.get(identifier)!);
-    return list;
+    return of(contentsmap.get(identifier)!);
   }
 }
