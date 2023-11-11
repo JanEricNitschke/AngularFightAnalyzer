@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { SelectionService } from '../selection.service';
 import { Result } from '../result';
+import { RequestContent } from '../request-data';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subscription, forkJoin } from 'rxjs';
 import { ChartDataset, ChartOptions } from 'chart.js';
@@ -18,6 +19,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     CT_win_percentage: [0, 0, 0],
     sql: '',
   };
+  UserSelection: RequestContent | undefined = undefined;
   loading: boolean = false;
   timerInnerHTML: string = '';
   ResponseStatusCode: number = 0;
@@ -142,6 +144,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     this._selectionServiceSubscription =
       this.selectionService.selectionObservable$.subscribe((value) => {
         let data = value.data;
+        this.UserSelection = data;
         if (data.map_name == '') {
           this.ResponseStatusCode = -17;
           return;
@@ -175,7 +178,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     this._selectionServiceSubscription.unsubscribe();
   }
 
-  async scanUpperRange(lower: number, upper: number, data: any) {
+  async scanUpperRange(lower: number, upper: number, data: RequestContent) {
     const callArray = [];
     const start = lower + 1 + ((upper - 1 - lower) % this.step);
     this.chartOptions.plugins!.title!.text =
@@ -213,7 +216,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     });
   }
 
-  async scanLowerRange(lower: number, upper: number, data: any) {
+  async scanLowerRange(lower: number, upper: number, data: RequestContent) {
     const callArray = [];
     const start = this.minimum + ((lower - this.minimum) % this.step);
     this.chartOptions.plugins!.title!.text =

@@ -1,4 +1,4 @@
-<h2>Results</h2>
+<h2>Results:</h2>
 <div class="flexbox">
     <div id="result_content" class="result_text">
         <p id="result_text" [ngSwitch]="ResponseStatusCode">
@@ -23,6 +23,21 @@
             <span id="timer">{{timerInnerHTML}}</span>
         </div>
     </div>
+    <details class="selection_summary">
+        <summary>Selection summary</summary>
+        <div id="request_content" class="result_text" *ngIf="UserSelection">
+            <p>You requested the CT win ratio for:<br></p>
+            <p>Map: {{UserSelection.map_name}}<br></p>
+            <p>CT Positions: {{UserSelection.positions.CT}}<br></p>
+            <p>T Positions: {{UserSelection.positions.T}}<br></p>
+        </div>
+        <details class="selection_summary">
+            <summary>Full selection</summary>
+            <div id="request_content" class="result_text">
+                <p>{{UserSelection | json}}</p>
+            </div>
+        </details>
+    </details>
     <div class="chart-wrapper" *ngIf="showCanvas">
         <canvas baseChart [type]="'line'" [datasets]="chartData" [labels]="chartLabels" [options]="chartOptions">
         </canvas>
