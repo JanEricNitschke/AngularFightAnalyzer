@@ -1,12 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { ExplanationComponent } from './explanation.component';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { Router } from "@angular/router";
+import { ExplanationComponent } from "./explanation.component";
 
 const router = {
-  navigate: jasmine.createSpy('navigate'),
+  navigate: jasmine.createSpy("navigate"),
 };
 
-describe('ExplanationComponent', () => {
+describe("ExplanationComponent", () => {
   let component: ExplanationComponent;
   let fixture: ComponentFixture<ExplanationComponent>;
 
@@ -20,30 +20,30 @@ describe('ExplanationComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create', () => {
+  it("should create", () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
 
-  it('should init', () => {
+  it("should init", () => {
     expect(component.example_map).toEqual(new Map<string, string[]>());
     fixture.detectChanges();
-    component.selectedExample = 'd2mid';
+    component.selectedExample = "d2mid";
     expect(
       component.example_map
         .get(component.selectedExample)![0]
-        .endsWith('dust2_mid_full.png'),
+        .endsWith("dust2_mid_full.png"),
     ).toBe(true);
-    component.selectedExample = 'infmid';
+    component.selectedExample = "infmid";
     expect(
       component.example_map
         .get(component.selectedExample)![0]
-        .startsWith('../../assets/examples/'),
+        .startsWith("../../assets/examples/"),
     ).toBe(true);
   });
 
-  it('should go to selector', () => {
+  it("should go to selector", () => {
     component.GoToSelector();
-    expect(router.navigate).toHaveBeenCalledWith(['selector']);
+    expect(router.navigate).toHaveBeenCalledWith(["selector"]);
   });
 });

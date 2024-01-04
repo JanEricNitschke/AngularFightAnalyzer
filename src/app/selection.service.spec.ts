@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-import { RequestData } from './request-data';
+import { TestBed } from "@angular/core/testing";
+import { RequestData } from "./request-data";
 
-import { SelectionService } from './selection.service';
+import { SelectionService } from "./selection.service";
 
-describe('SelectionService', () => {
+describe("SelectionService", () => {
   let service: SelectionService;
 
   beforeEach(() => {
@@ -11,13 +11,13 @@ describe('SelectionService', () => {
     service = TestBed.inject(SelectionService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
-  it('selection should be empty', (done: DoneFn) => {
+  it("selection should be empty", (done: DoneFn) => {
     service.selectionObservable$.subscribe((value) => {
       let data = value.data;
-      expect(data.map_name).toBe('');
+      expect(data.map_name).toBe("");
       expect(data.times.start).toBe(0);
       expect(data.times.end).toBe(175);
       expect(value.performScan).toBe(true);
@@ -25,10 +25,10 @@ describe('SelectionService', () => {
       done();
     });
   });
-  it('selection should be test_Data', (done: DoneFn) => {
+  it("selection should be test_Data", (done: DoneFn) => {
     let test_data: RequestData = {
       data: {
-        map_name: 'de_dust2',
+        map_name: "de_dust2",
         weapons: {
           Kill: [],
           CT: {
@@ -52,13 +52,13 @@ describe('SelectionService', () => {
           },
         },
         positions: {
-          CT: ['MidDoors', 'TSpawn', 'Long'],
+          CT: ["MidDoors", "TSpawn", "Long"],
           T: [],
         },
         use_weapons_classes: {
-          CT: 'weapons',
-          Kill: 'weapons',
-          T: 'weapons',
+          CT: "weapons",
+          Kill: "weapons",
+          T: "weapons",
         },
         times: {
           start: 2,
@@ -70,11 +70,11 @@ describe('SelectionService', () => {
     service.setSelection(test_data);
     service.selectionObservable$.subscribe((value) => {
       let data = value.data;
-      expect(data.map_name).toBe('de_dust2');
+      expect(data.map_name).toBe("de_dust2");
       expect(data.times.start).toBe(2);
       expect(data.times.end).toBe(16);
       expect(value.performScan).toBe(false);
-      expect(data.positions.CT).toEqual(['MidDoors', 'TSpawn', 'Long']);
+      expect(data.positions.CT).toEqual(["MidDoors", "TSpawn", "Long"]);
       done();
     });
   });

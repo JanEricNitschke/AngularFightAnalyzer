@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { informationmap } from './information-contents';
-import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { informationmap } from "./information-contents";
+import { Observable, of } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class InformationService {
   constructor() {}

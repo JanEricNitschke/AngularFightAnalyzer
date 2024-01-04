@@ -6,21 +6,21 @@ import {
   EventEmitter,
   ViewChildren,
   QueryList,
-} from '@angular/core';
-import { ButtonListComponent } from '../button-list/button-list.component';
-import { RequestData } from '../request-data';
+} from "@angular/core";
+import { ButtonListComponent } from "../button-list/button-list.component";
+import { RequestData } from "../request-data";
 
 @Component({
-  selector: 'app-weapon-selector',
-  templateUrl: './weapon-selector.component.html',
-  styleUrls: ['./weapon-selector.component.css'],
+  selector: "app-weapon-selector",
+  templateUrl: "./weapon-selector.component.html",
+  styleUrls: ["./weapon-selector.component.css"],
 })
 export class WeaponSelectorComponent {
-  Type: string = 'Classes';
-  Choices: string[] = ['Classes', 'Weapons'];
+  Type: string = "Classes";
+  Choices: string[] = ["Classes", "Weapons"];
   Allowed: string[] = [];
   Forbidden: string[] = [];
-  @Input() Name: string = '';
+  @Input() Name: string = "";
   @Input() only_allowed = false;
   @Output() AllowedEvent = new EventEmitter<string[]>();
   @Output() ForbiddenEvent = new EventEmitter<string[]>();
@@ -52,7 +52,7 @@ export class WeaponSelectorComponent {
 
   reset() {
     this.Children.forEach((c) => c.reset()); // or whatever you want to do to it here
-    this.Type = 'Classes';
+    this.Type = "Classes";
     this.TypeEvent.emit(this.Type);
   }
 

@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { RequestData } from './request-data';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { RequestData } from "./request-data";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class SelectionService {
   private selection$ = new BehaviorSubject<RequestData>({
     data: {
-      map_name: '',
+      map_name: "",
       weapons: {
         Kill: [],
         CT: {
@@ -36,9 +36,9 @@ export class SelectionService {
         T: [],
       },
       use_weapons_classes: {
-        CT: 'weapons',
-        Kill: 'weapons',
-        T: 'weapons',
+        CT: "weapons",
+        Kill: "weapons",
+        T: "weapons",
       },
       times: {
         start: 0,

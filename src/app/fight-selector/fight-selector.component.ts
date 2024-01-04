@@ -5,36 +5,36 @@ import {
   ViewChild,
   QueryList,
   AfterViewInit,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { MapSelectorComponent } from '../map-selector/map-selector.component';
-import { SelectionService } from '../selection.service';
-import { ConsentService } from '../consent.service';
-import { TimeSelectorComponent } from '../time-selector/time-selector.component';
-import { WeaponSelectorComponent } from '../weapon-selector/weapon-selector.component';
-import { CookieService } from 'ngx-cookie-service';
-import { RequestData } from '../request-data';
+} from "@angular/core";
+import { Router } from "@angular/router";
+import { MapSelectorComponent } from "../map-selector/map-selector.component";
+import { SelectionService } from "../selection.service";
+import { ConsentService } from "../consent.service";
+import { TimeSelectorComponent } from "../time-selector/time-selector.component";
+import { WeaponSelectorComponent } from "../weapon-selector/weapon-selector.component";
+import { CookieService } from "ngx-cookie-service";
+import { RequestData } from "../request-data";
 
 @Component({
-  selector: 'app-fight-selector',
-  templateUrl: './fight-selector.component.html',
-  styleUrls: ['./fight-selector.component.css'],
+  selector: "app-fight-selector",
+  templateUrl: "./fight-selector.component.html",
+  styleUrls: ["./fight-selector.component.css"],
 })
 export class FightSelectorComponent implements OnInit, AfterViewInit {
-  cookie_name: string = '';
-  Map: string = 'de_dust2';
+  cookie_name: string = "";
+  Map: string = "de_dust2";
   CTPositions: string[] = [];
   TPositions: string[] = [];
   KillAllowed: string[] = [];
-  KillType: string = 'Classes';
+  KillType: string = "Classes";
   CTAllowed: string[] = [];
   CTForbidden: string[] = [];
-  CTType: string = 'Classes';
+  CTType: string = "Classes";
   TAllowed: string[] = [];
   TForbidden: string[] = [];
-  TType: string = 'Classes';
-  StartTime: string = '0';
-  EndTime: string = '175';
+  TType: string = "Classes";
+  StartTime: string = "0";
+  EndTime: string = "175";
   PerformScan: boolean = true;
 
   @ViewChildren(WeaponSelectorComponent)
@@ -76,9 +76,9 @@ export class FightSelectorComponent implements OnInit, AfterViewInit {
       const settings_data = this.collectQuery();
       this.cookieService.set(this.cookie_name, JSON.stringify(settings_data), {
         expires: 365,
-        path: '/',
+        path: "/",
         secure: true,
-        sameSite: 'Lax',
+        sameSite: "Lax",
       });
     }
   }
@@ -98,7 +98,7 @@ export class FightSelectorComponent implements OnInit, AfterViewInit {
   }
 
   resetAll() {
-    if (confirm('Are you sure you want to reset your current selection?')) {
+    if (confirm("Are you sure you want to reset your current selection?")) {
       this.WeaponsChildren.forEach((c) => c.reset());
       this.MapComponent.reset();
       this.TimeComponent.reset();
@@ -110,24 +110,24 @@ export class FightSelectorComponent implements OnInit, AfterViewInit {
       data: {
         map_name: this.Map,
         weapons: {
-          Kill: this.KillType == 'Weapons' ? this.KillAllowed : [],
+          Kill: this.KillType == "Weapons" ? this.KillAllowed : [],
           T:
-            this.TType == 'Weapons'
+            this.TType == "Weapons"
               ? { Allowed: this.TAllowed, Forbidden: this.TForbidden }
               : { Allowed: [], Forbidden: [] },
           CT:
-            this.CTType == 'Weapons'
+            this.CTType == "Weapons"
               ? { Allowed: this.CTAllowed, Forbidden: this.CTForbidden }
               : { Allowed: [], Forbidden: [] },
         },
         classes: {
-          Kill: this.KillType == 'Classes' ? this.KillAllowed : [],
+          Kill: this.KillType == "Classes" ? this.KillAllowed : [],
           T:
-            this.TType == 'Classes'
+            this.TType == "Classes"
               ? { Allowed: this.TAllowed, Forbidden: this.TForbidden }
               : { Allowed: [], Forbidden: [] },
           CT:
-            this.CTType == 'Classes'
+            this.CTType == "Classes"
               ? { Allowed: this.CTAllowed, Forbidden: this.CTForbidden }
               : { Allowed: [], Forbidden: [] },
         },
@@ -148,11 +148,11 @@ export class FightSelectorComponent implements OnInit, AfterViewInit {
     event_data.data.times.end =
       event_data.data.times.end == 175 ? 10000 : event_data.data.times.end;
     this.selectionService.setSelection(event_data);
-    this.router.navigate(['result']);
+    this.router.navigate(["result"]);
   }
 
   goToExplanation() {
-    this.router.navigate(['explanation']);
+    this.router.navigate(["explanation"]);
   }
 
   updateStartTime(start_time: string) {

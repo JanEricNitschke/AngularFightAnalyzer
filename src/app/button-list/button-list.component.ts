@@ -6,16 +6,16 @@ import {
   Output,
   EventEmitter,
   OnChanges,
-} from '@angular/core';
-import { MapsWeaponsService } from '../maps-weapons.service';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+} from "@angular/core";
+import { MapsWeaponsService } from "../maps-weapons.service";
+import { FormControl } from "@angular/forms";
+import { Observable } from "rxjs";
+import { map, startWith } from "rxjs/operators";
 
 @Component({
-  selector: 'app-button-list',
-  templateUrl: './button-list.component.html',
-  styleUrls: ['./button-list.component.css'],
+  selector: "app-button-list",
+  templateUrl: "./button-list.component.html",
+  styleUrls: ["./button-list.component.css"],
 })
 export class ButtonListComponent implements OnInit, OnChanges {
   ContentNotSelected: string[] = [];
@@ -23,13 +23,13 @@ export class ButtonListComponent implements OnInit, OnChanges {
   contentCtrl = new FormControl();
   filteredContent: Observable<string[]>;
   initialized: Boolean = false;
-  @Input() ContentType = '';
-  @Input() Name = '';
+  @Input() ContentType = "";
+  @Input() Name = "";
   @Output() contentEvent = new EventEmitter<string[]>();
 
   constructor(private mapsweaponsService: MapsWeaponsService) {
     this.filteredContent = this.contentCtrl.valueChanges.pipe(
-      startWith(''),
+      startWith(""),
       map((content) =>
         content
           ? this._filterContent(content)
@@ -50,7 +50,7 @@ export class ButtonListComponent implements OnInit, OnChanges {
   }
 
   displayNull(_: any) {
-    return '';
+    return "";
   }
 
   getContent(): void {
@@ -65,14 +65,14 @@ export class ButtonListComponent implements OnInit, OnChanges {
     this.ContentNotSelected = this.ContentNotSelected.filter(
       (item) => !list_data.includes(item),
     );
-    this.contentCtrl.setValue('');
+    this.contentCtrl.setValue("");
     this.submitContent(this.ContentSelected);
   }
 
   reset() {
     this.getContent();
     this.ContentSelected = [];
-    this.contentCtrl.setValue('');
+    this.contentCtrl.setValue("");
     this.submitContent(this.ContentSelected);
   }
 
@@ -82,7 +82,7 @@ export class ButtonListComponent implements OnInit, OnChanges {
       (item) => item != content,
     );
     this.submitContent(this.ContentSelected);
-    this.contentCtrl.setValue('');
+    this.contentCtrl.setValue("");
   }
   removeElement(content: string): void {
     this.ContentNotSelected.push(content);
@@ -90,7 +90,7 @@ export class ButtonListComponent implements OnInit, OnChanges {
       (item) => item != content,
     );
     this.submitContent(this.ContentSelected);
-    this.contentCtrl.setValue('');
+    this.contentCtrl.setValue("");
   }
 
   submitContent(value: string[]) {

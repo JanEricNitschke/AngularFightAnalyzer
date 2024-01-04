@@ -1,18 +1,18 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { RequestData } from '../request-data';
+import { Component, OnInit, Output, EventEmitter } from "@angular/core";
+import { RequestData } from "../request-data";
 
 @Component({
-  selector: 'app-time-selector',
-  templateUrl: './time-selector.component.html',
-  styleUrls: ['./time-selector.component.css'],
+  selector: "app-time-selector",
+  templateUrl: "./time-selector.component.html",
+  styleUrls: ["./time-selector.component.css"],
 })
 export class TimeSelectorComponent {
-  lowerBoundMin: string = '0';
-  upperBoundMin: string = '174';
-  valueMin: string = '0';
-  lowerBoundMax: string = '1';
-  upperBoundMax: string = '175';
-  valueMax: string = '175';
+  lowerBoundMin: string = "0";
+  upperBoundMin: string = "174";
+  valueMin: string = "0";
+  lowerBoundMax: string = "1";
+  upperBoundMax: string = "175";
+  valueMax: string = "175";
   performScan: boolean = true;
   @Output() startEvent = new EventEmitter<string>();
   @Output() endingEvent = new EventEmitter<string>();
@@ -41,10 +41,10 @@ export class TimeSelectorComponent {
   }
 
   reset() {
-    this.valueMin = '0';
+    this.valueMin = "0";
     this.lowerBoundMin = this.valueMin;
     this.lowerBoundMax = (parseInt(this.valueMin) + 1).toString();
-    this.valueMax = '175';
+    this.valueMax = "175";
     this.upperBoundMax = this.valueMax;
     this.upperBoundMin = (parseInt(this.valueMax) - 1).toString();
     this.performScan = true;
@@ -58,8 +58,8 @@ export class TimeSelectorComponent {
     this.valueMax = settings_data.data.times.end.toString();
     this.lowerBoundMax = (parseInt(this.valueMin) + 1).toString();
     this.upperBoundMin = (parseInt(this.valueMax) - 1).toString();
-    this.lowerBoundMin = '0';
-    this.upperBoundMax = '175';
+    this.lowerBoundMin = "0";
+    this.upperBoundMax = "175";
     this.performScan = settings_data.performScan;
     this.startEvent.emit(this.valueMin);
     this.endingEvent.emit(this.valueMax);

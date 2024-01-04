@@ -1,21 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ConsentService } from './consent.service';
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { ConsentService } from "./consent.service";
 import {
   NgcCookieConsentService,
   NgcNoCookieLawEvent,
   NgcInitializingEvent,
   NgcStatusChangeEvent,
   NgcInitializationErrorEvent,
-} from 'ngx-cookieconsent';
-import { Subscription } from 'rxjs';
+} from "ngx-cookieconsent";
+import { Subscription } from "rxjs";
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'CS:GO FightAnalyzer';
+  title = "CS:GO FightAnalyzer";
 
   //keep refs to subscriptions to be able to unsubscribe later
   private popupOpenSubscription!: Subscription;
@@ -83,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   updateCookieStatus(event: NgcStatusChangeEvent): void {
-    if (event.status == 'allow') {
+    if (event.status == "allow") {
       this.consentService.consentGiven = true;
     } else {
       this.consentService.consentGiven = false;

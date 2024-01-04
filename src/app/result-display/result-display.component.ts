@@ -1,32 +1,32 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { SelectionService } from '../selection.service';
-import { Result } from '../result';
-import { RequestContent } from '../request-data';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subscription, forkJoin } from 'rxjs';
-import { ChartDataset, ChartOptions } from 'chart.js';
-import { BaseChartDirective } from 'ng2-charts';
+import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Router } from "@angular/router";
+import { SelectionService } from "../selection.service";
+import { Result } from "../result";
+import { RequestContent } from "../request-data";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Subscription, forkJoin } from "rxjs";
+import { ChartDataset, ChartOptions } from "chart.js";
+import { BaseChartDirective } from "ng2-charts";
 
 @Component({
-  selector: 'app-result-display',
-  templateUrl: './result-display.component.html',
-  styleUrls: ['./result-display.component.css'],
+  selector: "app-result-display",
+  templateUrl: "./result-display.component.html",
+  styleUrls: ["./result-display.component.css"],
 })
 export class ResultDisplayComponent implements OnInit, OnDestroy {
   ResponseBody: Result = {
     Situations_found: 0,
     CT_win_percentage: [0, 0, 0],
-    sql: '',
+    sql: "",
   };
   UserSelection: RequestContent | undefined = undefined;
   loading: boolean = false;
-  timerInnerHTML: string = '';
+  timerInnerHTML: string = "";
   ResponseStatusCode: number = 0;
   Request: any;
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
   _selectionServiceSubscription: Subscription;
 
@@ -42,33 +42,33 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
 
   chartData: ChartDataset[] = [
     {
-      label: 'CT win percentage',
+      label: "CT win percentage",
       data: this.plotData,
 
       pointHitRadius: 15, // expands the hover 'detection' area
       pointHoverRadius: 10, // grows the point when hovered
 
       pointRadius: 5,
-      borderColor: '#FF9900', // main line color aka $midnight-medium from @riapacheco/yutes/seasonal.scss
-      pointBackgroundColor: '#FF9900',
-      pointHoverBackgroundColor: '#FF9900',
+      borderColor: "#FF9900", // main line color aka $midnight-medium from @riapacheco/yutes/seasonal.scss
+      pointBackgroundColor: "#FF9900",
+      pointHoverBackgroundColor: "#FF9900",
       borderWidth: 3, // main line width
       hoverBorderWidth: 0, // borders on points
       pointBorderWidth: 0, // removes POINT borders
       tension: 0.3, // makes line more squiggly
     },
     {
-      label: 'Lower error',
+      label: "Lower error",
       data: this.plotLower,
       pointHitRadius: 0,
       pointRadius: 0,
       borderWidth: 1,
-      borderColor: '#ffd699',
+      borderColor: "#ffd699",
       tension: 0.3, // makes line more squiggly
     },
     {
-      borderColor: '#ffd699',
-      label: 'Upper error',
+      borderColor: "#ffd699",
+      label: "Upper error",
       data: this.plotUpper,
       pointRadius: 0,
       borderWidth: 1,
@@ -84,26 +84,26 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     scales: {
       xAxis: {
         title: {
-          text: 'Scanned value',
+          text: "Scanned value",
           display: true,
-          color: '#FF9900',
+          color: "#FF9900",
         },
       },
       yAxis: {
         min: 0,
         max: 100,
         title: {
-          text: 'CT win percentage',
+          text: "CT win percentage",
           display: true,
-          color: '#FF9900',
+          color: "#FF9900",
         },
       },
     },
 
     plugins: {
       title: {
-        text: 'Time range scan',
-        color: '#FF9900',
+        text: "Time range scan",
+        color: "#FF9900",
         display: true,
         font: {
           size: 20,
@@ -115,18 +115,18 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       tooltip: {
         filter: (tooltipItem) => tooltipItem.datasetIndex == 0,
         // ⤵️ tooltip main styles
-        backgroundColor: 'white',
+        backgroundColor: "white",
         displayColors: false,
         padding: 10,
 
         // ⤵️ title
-        titleColor: '#FF9900',
+        titleColor: "#FF9900",
         titleFont: {
           size: 18,
         },
 
         // ⤵️ body
-        bodyColor: '#FF9900',
+        bodyColor: "#FF9900",
         bodyFont: {
           size: 13,
         },
@@ -145,7 +145,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       this.selectionService.selectionObservable$.subscribe((value) => {
         let data = value.data;
         this.UserSelection = data;
-        if (data.map_name == '') {
+        if (data.map_name == "") {
           this.ResponseStatusCode = -17;
           return;
         }
@@ -163,7 +163,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
           }
         } else {
           this.call_API(
-            'https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev',
+            "https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev",
             data,
           ).subscribe((data) => {
             this.ResponseBody = JSON.parse(data.body);
@@ -182,7 +182,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     const callArray = [];
     const start = lower + 1 + ((upper - 1 - lower) % this.step);
     this.chartOptions.plugins!.title!.text =
-      'Scan over upper value of time range'; //"Lower data of time range"
+      "Scan over upper value of time range"; //"Lower data of time range"
     for (let i = start; i < this.maximum + 1; i += this.step) {
       if (i + this.step > this.maximum) {
         data.times.end = 10000;
@@ -191,7 +191,7 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       }
       callArray.push(
         this.http.post<any>(
-          'https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev',
+          "https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev",
           JSON.parse(JSON.stringify(data)),
           this.httpOptions,
         ),
@@ -220,12 +220,12 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     const callArray = [];
     const start = this.minimum + ((lower - this.minimum) % this.step);
     this.chartOptions.plugins!.title!.text =
-      'Scan over lower value of time range'; //"Lower data of time range"
+      "Scan over lower value of time range"; //"Lower data of time range"
     for (let i = start; i < upper; i += this.step) {
       data.times.start = i;
       callArray.push(
         this.http.post<any>(
-          'https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev',
+          "https://uq7f1xuyn1.execute-api.eu-central-1.amazonaws.com/dev",
           JSON.parse(JSON.stringify(data)),
           this.httpOptions,
         ),
@@ -278,9 +278,9 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
     seconds = Math.floor(seconds % 60);
 
     // 5 - Format so it shows a leading zero if needed
-    const minutesStr = ('00' + minutes).slice(-2);
-    const secondsStr = ('00' + seconds).slice(-2);
-    return minutesStr + 'm:' + secondsStr + 's';
+    const minutesStr = ("00" + minutes).slice(-2);
+    const secondsStr = ("00" + seconds).slice(-2);
+    return minutesStr + "m:" + secondsStr + "s";
   }
 
   // hiding loading
@@ -289,11 +289,11 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
   }
 
   GoToSelector() {
-    this.router.navigate(['selector']);
+    this.router.navigate(["selector"]);
   }
 
   GoToExplanation() {
-    this.router.navigate(['explanation']);
+    this.router.navigate(["explanation"]);
   }
 
   call_API(url: string, raw: any) {

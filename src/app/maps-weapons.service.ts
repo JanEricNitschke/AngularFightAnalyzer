@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { contentsmap } from './button-list-contents';
-import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { contentsmap } from "./button-list-contents";
+import { Observable, of } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class MapsWeaponsService {
   constructor() {}

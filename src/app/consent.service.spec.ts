@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ConsentService } from './consent.service';
+import { ConsentService } from "./consent.service";
 
-describe('ConsentService', () => {
+describe("ConsentService", () => {
   let service: ConsentService;
 
   beforeEach(() => {
@@ -10,19 +10,19 @@ describe('ConsentService', () => {
     service = TestBed.inject(ConsentService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
-  it('consent should be false', () => {
+  it("consent should be false", () => {
     expect(service.consentGiven).toBe(false);
   });
-  it('cookie name should be SelectorSettings', () => {
-    expect(service.cookie_name).toBe('SelectorSettings');
+  it("cookie name should be SelectorSettings", () => {
+    expect(service.cookie_name).toBe("SelectorSettings");
   });
-  it('settings should be modified', () => {
+  it("settings should be modified", () => {
     service.consentGiven = true;
-    service.cookie_name = 'test';
+    service.cookie_name = "test";
     expect(service.consentGiven).toBe(true);
-    expect(service.cookie_name).toBe('test');
+    expect(service.cookie_name).toBe("test");
   });
 });
