@@ -42,62 +42,84 @@ li {
     display: inline-block;
 }
 
-::ng-deep .mat-form-field-wrapper {
-    padding-bottom: 0;
-}
-
-::ng-deep .mat-focused .mat-form-field-label {
-    /*change color of label*/
+::ng-deep .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
     color: #FF9900 !important;
+    font-size: 16px !important;
+    transform: translateY(-20px) !important;
+
 }
 
-::ng-deep .mat-form-field-label {
-    /*change color of label*/
+::ng-deep .mdc-text-field:not(.mdc-text-field-disabled) .mdc-floating-label {
     color: #FF9900 !important;
+    font-size: 16px !important;
+    transform: translateY(-20px) !important;
 }
 
-::ng-deep .mat-form-field-outline {
-    /*change color of label*/
+::ng-deep .mat-mdc-text-field-wrapper .mat-mdc-form-field-flex .mat-mdc-floating-label {
     color: #FF9900 !important;
+    font-size: 16px !important;
+    top: 27px !important;
+    left: 0px !important;
 }
 
-::ng-deep.mat-form-field-underline {
-    /*change color of underline*/
-    background-color: #FF9900 !important;
+::ng-deep .mat-mdc-form-field .mdc-text-field--outlined .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+    color: #FF9900 !important;
+    font-size: 16px !important;
+    transform: translateY(-20x) !important;
 }
 
-::ng-deep.mat-input-placeholder {
-    /*change color of underline*/
-    background-color: #FF9900 !important;
+
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: #FF9900 !important;
+    font-size: 16px !important;
 }
 
-::ng-deep.mat-form-field-ripple {
-    /*change color of underline when focused*/
-    background-color: #FF9900 !important;
+::ng-deep .mdc-text-field:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder {
+    color: #FF9900 !important;
+    font-size: 16px !important;
 }
 
-::ng-deep .mat-input-element::placeholder {
-    color: #FF9900;
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: #FF9900 !important;
+    border-width: 2px !important;
 }
 
-::ng-deep .mat-form-field {
-    /*change color of label*/
-    width: 150px;
+
+
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched--outline .mdc-notched-outline__leading,
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched--outline .mdc-notched-outline__notch,
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover .mdc-notched--outline .mdc-notched-outline__trailing {
+    border-color: #FF9900 !important;
 }
 
-::ng-deep .mat-input-element {
-    /*change color of label*/
-    width: 150px;
+
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__leading,
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__notch,
+::ng-deep .mdc-text-field--outlined.mdc-text-field:not(.mdc-text-field--disabled).mdc-text-field--focused .mdc-notched-outline__trailing {
+    border-color: #FF9900 !important;
+    border-width: 2px !important;
 }
 
-::ng-deep .mat-form-field-infix {
-    padding: 0.25em 0 !important;
+::ng-deep .mdc-notched-outline__notch {
+    border-left: none !important;
+  }
+
+::ng-deep .mat-mdc-form-field {
+    height: 35px !important;
+    margin: 0.25em 0 !important;
 }
 
-::ng-deep .mat-form-field-label {
-    transform: translateY(-12px) !important;
+
+::ng-deep .mat-mdc-text-field-wrapper {
+    height: 35px !important;
+    width: 150px !important;
+
 }
 
-* {
-    font-family: Arial, Helvetica, sans-serif;
+::ng-deep .mat-mdc-input-element {
+    top: -10px !important;
+    position: relative !important;
+
 }

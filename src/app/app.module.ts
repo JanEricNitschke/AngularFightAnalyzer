@@ -19,7 +19,11 @@ import { ExplanationComponent } from "./explanation/explanation.component";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { NgChartsModule } from "ng2-charts";
+import {
+  provideCharts,
+  withDefaultRegisterables,
+  BaseChartDirective,
+} from "ng2-charts";
 import { CookieService } from "ngx-cookie-service";
 import { ConsentService } from "./consent.service";
 import {
@@ -80,12 +84,16 @@ const cookieConfig: NgcCookieConsentConfig = {
     MatInputModule,
     MatButtonToggleModule,
     BrowserAnimationsModule,
-    NgChartsModule,
     MatSlideToggleModule,
     MatProgressSpinnerModule,
     NgcCookieConsentModule.forRoot(cookieConfig),
+    BaseChartDirective,
   ],
-  providers: [CookieService, ConsentService],
+  providers: [
+    CookieService,
+    ConsentService,
+    provideCharts(withDefaultRegisterables()),
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
