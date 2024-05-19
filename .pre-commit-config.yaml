@@ -24,10 +24,6 @@ repos:
       - id: prettier
         files: ^src/app/
         types_or: [javascript, ts]
-  - repo: https://github.com/pre-commit/mirrors-csslint
-    rev: v1.0.5
-    hooks:
-      - id: csslint
   - repo: local
     hooks:
       - id: ng-lint

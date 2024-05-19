@@ -36,7 +36,8 @@ input {
     align-items: center;
 }
 
-::ng-deep.mat-slide-toggle {
+
+::ng-deep.mat-mdc-slide-toggle  {
     /*change color of underline*/
     color: #FF9900 !important;
     font-size: 20px;
@@ -45,12 +46,19 @@ input {
     padding: 5px;
 }
 
-::ng-deep.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+::ng-deep .mdc-label {
+    /*change color of underline*/
+    color: #FF9900 !important;
+    font-size: 20px;
+}
+
+::ng-deep.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mat-mdc-slide-toggle-bar {
     /*change color of underline*/
     background-color: #ffd699 !important;
 }
 
-::ng-deep.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+
+::ng-deep.mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked:not(.mat-disabled) .mat-mdc-slide-toggle-thumb {
     /*change color of underline*/
     background-color: #FF9900 !important;
 }
