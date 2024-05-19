@@ -20,9 +20,9 @@ jobs:
       #     args: --check "./tictactoe_javascript/**.{css,js}"
 
       - name: Setup
-        run: npm ci
+        run: npm ci --include=optional
       - name: Build
-        run: npm build
+        run: npm run build
       - name: Lint
         run: npm run lint
       - name: Test

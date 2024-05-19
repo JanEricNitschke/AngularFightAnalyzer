@@ -52,5 +52,11 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "typescript": "~5.4.5"
+  },
+  "optionalDependencies": {
+    "@nx/nx-darwin-arm64": "19.0.4",
+    "@nx/nx-darwin-x64": "19.0.4",
+    "@nx/nx-linux-x64-gnu": "19.0.4",
+    "@nx/nx-win32-x64-msvc": "19.0.4"
   }
 }
