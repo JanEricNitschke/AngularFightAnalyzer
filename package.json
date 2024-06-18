@@ -26,9 +26,9 @@
     "ng2-charts": "^6.0.1",
     "ngx-cookie-service": "^17.1.0",
     "ngx-cookieconsent": "^6.0.0",
-    "rxjs": "~7.5.0",
-    "tslib": "^2.3.0",
-    "zone.js": "~0.14.6"
+    "rxjs": "~7.8.1",
+    "tslib": "^2.6.3",
+    "zone.js": "~0.14.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^17.3.7",
@@ -40,23 +40,23 @@
     "@angular/cli": "~17.3.7",
     "@angular/compiler-cli": "^17.3.9",
     "@types/jasmine": "~4.0.0",
-    "@typescript-eslint/eslint-plugin": "7.9.0",
-    "@typescript-eslint/parser": "7.9.0",
+    "@typescript-eslint/eslint-plugin": "7.13.1",
+    "@typescript-eslint/parser": "7.13.1",
     "eslint": "^8.46.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^9.1.0",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.1.0",
+    "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.4.5"
   },
   "optionalDependencies": {
-    "@nx/nx-darwin-arm64": "19.0.4",
-    "@nx/nx-darwin-x64": "19.0.4",
-    "@nx/nx-linux-x64-gnu": "19.0.4",
-    "@nx/nx-win32-x64-msvc": "19.0.4"
+    "@nx/nx-darwin-arm64": "19.3.0",
+    "@nx/nx-darwin-x64": "19.3.0",
+    "@nx/nx-linux-x64-gnu": "19.3.0",
+    "@nx/nx-win32-x64-msvc": "19.3.0"
   }
 }
