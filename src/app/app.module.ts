@@ -9,7 +9,10 @@ import { WeaponSelectorComponent } from "./weapon-selector/weapon-selector.compo
 import { TimeSelectorComponent } from "./time-selector/time-selector.component";
 import { ButtonListComponent } from "./button-list/button-list.component";
 import { InformationDisplayComponent } from "./information-display/information-display.component";
-import { HttpClientModule } from "@angular/common/http";
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
 import { AppRoutingModule } from "./app-routing.module";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -73,11 +76,11 @@ const cookieConfig: NgcCookieConsentConfig = {
     ExplanationComponent,
     ImpressumComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     AppRoutingModule,
     MatFormFieldModule,
     MatAutocompleteModule,
@@ -93,7 +96,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     CookieService,
     ConsentService,
     provideCharts(withDefaultRegisterables()),
+    provideHttpClient(withInterceptorsFromDi()),
   ],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}
