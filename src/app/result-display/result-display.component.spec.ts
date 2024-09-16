@@ -2,10 +2,14 @@ import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { ResultDisplayComponent } from "./result-display.component";
 import {
-  HttpClientTestingModule,
   HttpTestingController,
+  provideHttpClientTesting,
 } from "@angular/common/http/testing";
-import { HttpClient } from "@angular/common/http";
+import {
+  HttpClient,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from "@angular/common/http";
 import { RequestData } from "../request-data";
 import { SelectionService } from "../selection.service";
 import { Result } from "../result";
@@ -119,11 +123,13 @@ describe("ResultDisplayComponent", () => {
     };
     await TestBed.configureTestingModule({
       declarations: [ResultDisplayComponent],
+      imports: [],
       providers: [
         { provide: Router, useValue: router },
         { provide: SelectionService, useValue: SelectionServiceStub },
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
       ],
-      imports: [HttpClientTestingModule],
     }).compileComponents();
 
     httpClient = TestBed.inject(HttpClient);
