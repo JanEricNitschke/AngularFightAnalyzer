@@ -28,7 +28,7 @@
     "ngx-cookieconsent": "^6.0.0",
     "rxjs": "~7.8.1",
     "tslib": "^2.6.3",
-    "zone.js": "~0.14.7"
+    "zone.js": "~0.15.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.4",
@@ -51,12 +51,12 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.4.5"
+    "typescript": "~5.6.2"
   },
   "optionalDependencies": {
-    "@nx/nx-darwin-arm64": "19.3.0",
-    "@nx/nx-darwin-x64": "19.3.0",
-    "@nx/nx-linux-x64-gnu": "19.3.0",
-    "@nx/nx-win32-x64-msvc": "19.3.0"
+    "@nx/nx-darwin-arm64": "19.8.0",
+    "@nx/nx-darwin-x64": "19.8.0",
+    "@nx/nx-linux-x64-gnu": "19.8.0",
+    "@nx/nx-win32-x64-msvc": "19.8.0"
   }
 }
