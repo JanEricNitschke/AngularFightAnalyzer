@@ -16,6 +16,7 @@ import { map, startWith } from "rxjs/operators";
   selector: "app-button-list",
   templateUrl: "./button-list.component.html",
   styleUrls: ["./button-list.component.css"],
+  standalone: false,
 })
 export class ButtonListComponent implements OnInit, OnChanges {
   ContentNotSelected: string[] = [];

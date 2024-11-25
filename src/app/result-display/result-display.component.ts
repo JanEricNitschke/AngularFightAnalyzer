@@ -12,6 +12,7 @@ import { BaseChartDirective } from "ng2-charts";
   selector: "app-result-display",
   templateUrl: "./result-display.component.html",
   styleUrls: ["./result-display.component.css"],
+  standalone: false,
 })
 export class ResultDisplayComponent implements OnInit, OnDestroy {
   ResponseBody: Result = {

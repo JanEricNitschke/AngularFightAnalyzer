@@ -5,6 +5,7 @@ import { InformationService } from "../information.service";
   selector: "app-information-display",
   templateUrl: "./information-display.component.html",
   styleUrls: ["./information-display.component.css"],
+  standalone: false,
 })
 export class InformationDisplayComponent implements OnInit {
   InformationContent: string = "";

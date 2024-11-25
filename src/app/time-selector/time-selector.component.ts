@@ -5,6 +5,7 @@ import { RequestData } from "../request-data";
   selector: "app-time-selector",
   templateUrl: "./time-selector.component.html",
   styleUrls: ["./time-selector.component.css"],
+  standalone: false,
 })
 export class TimeSelectorComponent {
   lowerBoundMin: string = "0";

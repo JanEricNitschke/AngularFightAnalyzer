@@ -14,6 +14,7 @@ import { RequestData } from "../request-data";
   selector: "app-weapon-selector",
   templateUrl: "./weapon-selector.component.html",
   styleUrls: ["./weapon-selector.component.css"],
+  standalone: false,
 })
 export class WeaponSelectorComponent {
   Type: string = "Classes";

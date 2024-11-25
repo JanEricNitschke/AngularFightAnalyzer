@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
   selector: "app-explanation",
   templateUrl: "./explanation.component.html",
   styleUrls: ["./explanation.component.css"],
+  standalone: false,
 })
 export class ExplanationComponent implements OnInit {
   example_map = new Map<string, string[]>();

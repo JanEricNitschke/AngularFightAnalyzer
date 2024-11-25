@@ -20,6 +20,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
       useClass: ButtonListStubComponent,
     },
   ],
+  standalone: false,
 })
 class ButtonListStubComponent {
   setSettings(list_data: string[]) {}

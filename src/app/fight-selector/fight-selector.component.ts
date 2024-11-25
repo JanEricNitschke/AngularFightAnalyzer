@@ -19,6 +19,7 @@ import { RequestData } from "../request-data";
   selector: "app-fight-selector",
   templateUrl: "./fight-selector.component.html",
   styleUrls: ["./fight-selector.component.css"],
+  standalone: false,
 })
 export class FightSelectorComponent implements OnInit, AfterViewInit {
   cookie_name: string = "";

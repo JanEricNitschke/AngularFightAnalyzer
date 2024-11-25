@@ -11,6 +11,7 @@ import { of, Subject } from "rxjs";
 @Component({
   selector: "app-router-outlet",
   template: "",
+  standalone: false,
 })
 class MockRouterOutletComponent {}
 
