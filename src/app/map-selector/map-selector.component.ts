@@ -13,6 +13,7 @@ import { RequestData } from "../request-data";
   selector: "app-map-selector",
   templateUrl: "./map-selector.component.html",
   styleUrls: ["./map-selector.component.css"],
+  standalone: false,
 })
 export class MapSelectorComponent {
   maps = [

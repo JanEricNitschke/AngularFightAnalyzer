@@ -13,6 +13,7 @@ import { CookieService } from "ngx-cookie-service";
 @Component({
   selector: "app-router-outlet",
   template: "",
+  standalone: false,
 })
 class MockRouterOutletComponent {}
 
@@ -25,6 +26,7 @@ class MockRouterOutletComponent {}
       useClass: WeaponSelectorStubComponent,
     },
   ],
+  standalone: false,
 })
 class WeaponSelectorStubComponent {
   setSettings(settings: RequestData) {}
@@ -43,6 +45,7 @@ class WeaponSelectorStubComponent {
       useClass: TimeSelectorStubComponent,
     },
   ],
+  standalone: false,
 })
 class TimeSelectorStubComponent {
   setSettings(settings: RequestData) {}
@@ -61,6 +64,7 @@ class TimeSelectorStubComponent {
       useClass: MapSelectorStubComponent,
     },
   ],
+  standalone: false,
 })
 class MapSelectorStubComponent {
   setSettings(settings: RequestData) {}
