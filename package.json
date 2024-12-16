@@ -23,7 +23,7 @@
     "@angular/router": "^19.0.3",
     "chart.js": "^4.4.7",
     "cookieconsent": "^3.1.1",
-    "ng2-charts": "^6.0.1",
+    "ng2-charts": "^7.0.0",
     "ngx-cookie-service": "^19.0.0",
     "ngx-cookieconsent": "^6.0.0",
     "rxjs": "~7.8.1",
