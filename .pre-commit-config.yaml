@@ -1,7 +1,7 @@
 repos:
   # General
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
       - id: check-json
@@ -14,7 +14,7 @@ repos:
       - id: check-xml
       - id: check-ast
   - repo: https://github.com/crate-ci/typos
-    rev: v1.21.0
+    rev: v1.32.0
     hooks:
       - id: typos
         args: []
