@@ -6,6 +6,7 @@ import {
   Output,
   EventEmitter,
   OnChanges,
+  inject,
 } from "@angular/core";
 import { MapsWeaponsService } from "../maps-weapons.service";
 import { FormControl } from "@angular/forms";
@@ -19,6 +20,8 @@ import { map, startWith } from "rxjs/operators";
   standalone: false,
 })
 export class ButtonListComponent implements OnInit, OnChanges {
+  private mapsweaponsService = inject(MapsWeaponsService);
+
   ContentNotSelected: string[] = [];
   ContentSelected: string[] = [];
   contentCtrl = new FormControl();
@@ -28,7 +31,7 @@ export class ButtonListComponent implements OnInit, OnChanges {
   @Input() Name = "";
   @Output() contentEvent = new EventEmitter<string[]>();
 
-  constructor(private mapsweaponsService: MapsWeaponsService) {
+  constructor() {
     this.filteredContent = this.contentCtrl.valueChanges.pipe(
       startWith(""),
       map((content) =>

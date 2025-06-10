@@ -5,6 +5,7 @@ import {
   ViewChild,
   QueryList,
   AfterViewInit,
+  inject,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { MapSelectorComponent } from "../map-selector/map-selector.component";
@@ -22,6 +23,11 @@ import { RequestData } from "../request-data";
   standalone: false,
 })
 export class FightSelectorComponent implements OnInit, AfterViewInit {
+  private router = inject(Router);
+  private selectionService = inject(SelectionService);
+  private cookieService = inject(CookieService);
+  private consentService = inject(ConsentService);
+
   cookie_name: string = "";
   Map: string = "de_dust2";
   CTPositions: string[] = [];
@@ -44,13 +50,6 @@ export class FightSelectorComponent implements OnInit, AfterViewInit {
   MapComponent!: MapSelectorComponent;
   @ViewChild(TimeSelectorComponent)
   TimeComponent!: TimeSelectorComponent;
-
-  constructor(
-    private router: Router,
-    private selectionService: SelectionService,
-    private cookieService: CookieService,
-    private consentService: ConsentService,
-  ) {}
 
   ngOnInit(): void {
     this.cookie_name = this.consentService.cookie_name;

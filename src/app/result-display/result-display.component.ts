@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { SelectionService } from "../selection.service";
 import { Result } from "../result";
@@ -15,6 +15,10 @@ import { BaseChartDirective } from "ng2-charts";
   standalone: false,
 })
 export class ResultDisplayComponent implements OnInit, OnDestroy {
+  private http = inject(HttpClient);
+  private router = inject(Router);
+  private selectionService = inject(SelectionService);
+
   ResponseBody: Result = {
     Situations_found: 0,
     CT_win_percentage: [0, 0, 0],
@@ -134,12 +138,6 @@ export class ResultDisplayComponent implements OnInit, OnDestroy {
       },
     },
   };
-
-  constructor(
-    private http: HttpClient,
-    private router: Router,
-    private selectionService: SelectionService,
-  ) {}
 
   ngOnInit(): void {
     this._selectionServiceSubscription =
