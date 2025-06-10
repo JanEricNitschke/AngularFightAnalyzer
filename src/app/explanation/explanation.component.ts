@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, inject } from "@angular/core";
 import { Router } from "@angular/router";
 
 @Component({
@@ -8,11 +8,11 @@ import { Router } from "@angular/router";
   standalone: false,
 })
 export class ExplanationComponent implements OnInit {
+  private router = inject(Router);
+
   example_map = new Map<string, string[]>();
   example_keys: string[];
   selectedExample: string = "";
-
-  constructor(private router: Router) {}
 
   ngOnInit(): void {
     const basePath: string = "../../assets/examples/";

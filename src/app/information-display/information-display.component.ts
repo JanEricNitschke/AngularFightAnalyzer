@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, inject } from "@angular/core";
 import { InformationService } from "../information.service";
 
 @Component({
@@ -8,9 +8,10 @@ import { InformationService } from "../information.service";
   standalone: false,
 })
 export class InformationDisplayComponent implements OnInit {
+  private informationService = inject(InformationService);
+
   InformationContent: string = "";
   @Input() Type = "";
-  constructor(private informationService: InformationService) {}
 
   ngOnInit(): void {
     this.getInformationContent();

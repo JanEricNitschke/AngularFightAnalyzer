@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, inject } from "@angular/core";
 import { ConsentService } from "./consent.service";
 import {
   NgcCookieConsentService,
@@ -16,6 +16,9 @@ import { Subscription } from "rxjs";
   standalone: false,
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private consentService = inject(ConsentService);
+  private ccService = inject(NgcCookieConsentService);
+
   title = "CS:GO FightAnalyzer";
 
   //keep refs to subscriptions to be able to unsubscribe later
@@ -27,11 +30,6 @@ export class AppComponent implements OnInit, OnDestroy {
   private statusChangeSubscription!: Subscription;
   private revokeChoiceSubscription!: Subscription;
   private noCookieLawSubscription!: Subscription;
-
-  constructor(
-    private consentService: ConsentService,
-    private ccService: NgcCookieConsentService,
-  ) {}
 
   ngOnInit(): void {
     // subscribe to cookieconsent observables to react to main events
