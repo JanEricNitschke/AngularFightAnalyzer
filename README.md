@@ -14,8 +14,6 @@ The application offers an introduction view with examples clarifiying the apps p
 
 An AWS lambda function alongside a RDS MySQL database form the backend for the application.
 
-Hosted [here](https://main.d225v44fsxss8s.amplifyapp.com) on AWS.
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
 ## Development server
